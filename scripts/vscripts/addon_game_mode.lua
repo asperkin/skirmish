@@ -12,13 +12,29 @@ function Precache( context )
 			PrecacheResource( "particle", "*.vpcf", context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
+   PrecacheUnitByNameSync("pc_gnoll", context)
 end
 
 -- Create the game mode when we activate
 function Activate()
 	GameRules.AddonTemplate = CAddonTemplateGameMode()
-	GameRules.AddonTemplate:InitGameMode()
+	
+   GameRules:GetGameModeEntity():SetThink(spawnUnits, 2)
 end
+
+function spawnUnits() 
+   -- spawn player units
+   print("in onGameStart().")
+   local unit_team = DOTA_TEAM_GOODGUYS
+   local unit_name = "pc_gnoll"
+   local player = PlayerResource:GetPlayer(0)
+   local point = Vector(0,0,0)
+   local unit = CreateUnitByName(unit_name, point, true, nil, nil, unit_team)
+   unit:SetControllableByPlayer(player:GetPlayerID(), true)
+
+   -- dont run again
+   return nil
+end   
 
 function CAddonTemplateGameMode:InitGameMode()
 	print( "Template addon is loaded." )
