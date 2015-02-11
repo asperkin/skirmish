@@ -57,7 +57,7 @@
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.5"
     "AbilityCooldown"  "0"
-    "AbilityManaCost"  "0 0 0 0"
+    "AbilityManaCost"  "0"
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -152,6 +152,186 @@
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%range"
                "MODIFIER_PROPERTY_BONUS_DAY_VISION" "%vision_bonus"
                "MODIFIER_PROPERTY_BONUS_NIGHT_VISION" "%vision_bonus"
+            }
+        }
+    }
+   }
+   "Eviscerate"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "1"
+    "AbilityManaCost"  "0"
+    "AbilityChannelTime" "5"
+    "AbilityCastAnimation" "ACT_DOTA_VICTORY"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "damage_bonus" "100"
+        }
+    }
+
+    "precache"
+    {
+        "particle" "particles/units/heroes/hero_medusa/medusa_mana_shield_snakeskin.vpcf"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnChannelSucceeded"
+    {
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "modifier_evis"
+       }
+    }
+
+    "Modifiers"
+    {
+        "modifier_evis"
+        {
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+            "States"
+            {
+               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "OnAttackLanded"
+            {
+               "Damage"
+               {
+                  "Target"    "TARGET"
+                  "Type"      "DAMAGE_TYPE_PHYSICAL"
+                  "Damage"    "%damage_bonus"
+               }
+
+               "RemoveModifier"
+               {
+                  "Target"    "CASTER"
+                  "ModifierName" "modifier_evis"
+               }
+            }
+
+            "OnAttackFailed"
+            {
+               "Damage"
+               {
+                  "Target"    "TARGET"
+                  "Type"      "DAMAGE_TYPE_PHYSICAL"
+                  "Damage"    "%damage_bonus"
+               }
+
+               "RemoveModifier"
+               {
+                  "Target"    "CASTER"
+                  "ModifierName" "modifier_evis"
+               }
+            }
+
+            "OnOrder"
+            {
+               "RemoveModifier"
+               {
+                  "Target"    "CASTER"
+                  "ModifierName" "modifier_evis"
+               }
+            }
+
+            "Properties"
+            {
+            }
+        }
+    }
+   }
+   "Berserk"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "1"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "atk_speed" "50"
+        }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "damage_taken" "50"
+        }
+    }
+
+    "precache"
+    {
+        "particle" "particles/units/heroes/hero_medusa/medusa_mana_shield_snakeskin.vpcf"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnToggleOn"
+    {
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "modifier_berserk"
+       }
+    }
+    "OnToggleOff"
+    {
+       "RemoveModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "modifier_berserk"
+       }
+    }
+
+    "Modifiers"
+    {
+        "modifier_berserk"
+        {
+           "StatusEffectName" "particles/status_fx/status_effect_gods_strength.vpcf"
+           "StatusEffectPriority" "10"
+           "OnCreated"
+           {
+           }
+
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%atk_speed"
+               "MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE" "%damage_taken"
+
             }
         }
     }

@@ -51,7 +51,7 @@ function spawnHeadhunters(num)
 end
 
 function spawnSiege(num)
-   spawnUnits(0, "Siege_Golem", 120, 5800, num)
+   spawnUnits(0, "Siege_Golem", 200, 5800, num)
 end   
 
 function spawnArmy() 
