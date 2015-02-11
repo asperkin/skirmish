@@ -211,7 +211,8 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"RingRadius"				"70"
+      "BoundsHullName"        "DOTA_HULL_SIZE_HUGE"
+		"RingRadius"				"100"
 		"HealthBarOffset"			"270"
 
 		// Bounty
@@ -223,7 +224,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"250"		// Speed.			
+		"MovementSpeed"				"240"		// Speed.			
 
 		// Status
 		//----------------------------------------------------------------
