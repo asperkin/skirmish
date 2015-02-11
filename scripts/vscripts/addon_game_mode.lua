@@ -12,25 +12,55 @@ function Precache( context )
 			PrecacheResource( "particle", "*.vpcf", context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
-   PrecacheUnitByNameSync("pc_gnoll", context)
+   PrecacheUnitByNameSync("Gnoll_Headhunter", context)
+   PrecacheUnitByNameSync("Forest_Footman", context)
+   PrecacheUnitByNameSync("Siege_Golem", context)
 end
 
 -- Create the game mode when we activate
 function Activate()
 	GameRules.AddonTemplate = CAddonTemplateGameMode()
 	
-   GameRules:GetGameModeEntity():SetThink(spawnUnits, 2)
+   GameRules:GetGameModeEntity():SetThink(spawnArmy, 2)
 end
 
-function spawnUnits() 
+-- generic unit spawning. istep needed for different unit widths
+function spawnUnits(player, unit_name, istep, ycoord, num)
+   local imax = istep * (num - 1)
+   local unit_team
+   if player == 0 then
+      unit_team = DOTA_TEAM_GOODGUYS
+   else
+      unit_team = DOTA_TEAM_BADGUYS
+   end
+
+   for i = 0, imax, istep do
+      local point = Vector(-(imax/2) + i, ycoord, 0) -- centered
+      
+      local unit = CreateUnitByName(unit_name, point, true, nil, nil, unit_team)
+      unit:SetControllableByPlayer(player, true)
+   end
+end
+
+function spawnFootmen(num)
+    spawnUnits(0, "Forest_Footman", 80, 5500, num)
+    -- spawn for other player as well
+end
+function spawnHeadhunters(num)
+    spawnUnits(0, "Gnoll_Headhunter", 80, 5600, num)
+end
+
+function spawnSiege(num)
+   spawnUnits(0, "Siege_Golem", 120, 5800, num)
+end   
+
+function spawnArmy() 
    -- spawn player units
-   print("in onGameStart().")
-   local unit_team = DOTA_TEAM_GOODGUYS
-   local unit_name = "pc_gnoll"
-   local player = PlayerResource:GetPlayer(0)
-   local point = Vector(0,0,0)
-   local unit = CreateUnitByName(unit_name, point, true, nil, nil, unit_team)
-   unit:SetControllableByPlayer(player:GetPlayerID(), true)
+   print("in spawnUnits().")
+
+   spawnHeadhunters(10)
+   spawnFootmen(10)
+   spawnSiege(4)
 
    -- dont run again
    return nil
