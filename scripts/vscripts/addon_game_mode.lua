@@ -15,6 +15,7 @@ function Precache( context )
    PrecacheUnitByNameSync("Gnoll_Headhunter", context)
    PrecacheUnitByNameSync("Forest_Footman", context)
    PrecacheUnitByNameSync("Siege_Golem", context)
+   PrecacheUnitByNameSync("Ghost_Assassin", context)
 end
 
 -- Create the game mode when we activate
@@ -54,6 +55,10 @@ function spawnSiege(num)
    spawnUnits(0, "Siege_Golem", 200, 5800, num)
 end   
 
+function spawnAssassin(num)
+   spawnUnits(0, "Ghost_Assassin", 80, 5900, num)
+end
+
 function spawnArmy() 
    -- spawn player units
    print("in spawnUnits().")
@@ -61,6 +66,7 @@ function spawnArmy()
    spawnHeadhunters(10)
    spawnFootmen(10)
    spawnSiege(4)
+   spawnAssassin(1)
 
    -- dont run again
    return nil

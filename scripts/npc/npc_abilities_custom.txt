@@ -9,14 +9,16 @@
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+    "AbilityTextureName"   "warlock_rain_of_chaos"
 
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.5"
     "AbilityCooldown"  "0"
     "AbilityManaCost"  "0"
-    "AbilityChannelTime" "5"
-    "AbilityCastAnimation" "ACT_DOTA_CAST_DISABLED"
+    "AbilityChannelTime" "4"
+    "AbilityCastAnimation" "ACT_DOTA_ATTACK"
+    "AnimationPlaybackRate" "0.1"
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -45,7 +47,7 @@
         "05"
         {
            "var_type" "FIELD_INTEGER"
-           "splash_dmg" "50"
+           "splash_dmg" "80"
         }
         "06"
         {
@@ -59,12 +61,28 @@
         "particle" "particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
         "particle" "particles/status_fx/status_effect_doom.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
     }
 
     // Data Driven
     //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "mod_stunned"
+       }
+    }
+
     "OnChannelSucceeded"
     {
+       "RemoveModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "mod_cmd_restricted"
+       }
+
         "ApplyModifier"
         {
             "Target"       "CASTER"
@@ -72,12 +90,24 @@
         }
         "FireSound"
         {
-           
+            "EffectName" "Hero_Nevermore.Shadowraze"
+            "Target"     "CASTER"
         }
     }
 
     "Modifiers"
     {
+       "mod_cmd_restricted"
+       {
+          "Passive"    "0"
+          "IsBuff"     "0"
+          "IsPurgable" "0"
+          "IsHidden"   "1"
+          "States"
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+          }
+       }
         "mod_war_stance"
         {
             "StatusEffectName"   "particles/status_fx/status_effect_doom.vpcf"
@@ -141,6 +171,7 @@
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+    "AbilityTextureName" "warlock_golem_flaming_fists"
 
     // Stats
     //-------------------------------------------------------------------------------------
@@ -150,12 +181,40 @@
     "AbilityChannelTime" "3"
     "AbilityCastAnimation" "ACT_DOTA_CHANNEL_ABILITY_1"
 
+    "OnSpellStart"
+    {
+       "ApplyModifier"
+       {
+          "Target"   "CASTER"
+          "ModifierName"   "mod_cmd_restricted"
+       }
+    }
+
     "OnChannelFinish"
     {
        "RemoveModifier"
        {
           "Target"   "CASTER"
           "ModifierName"   "mod_war_stance"
+       }
+       "RemoveModifier"
+       {
+          "Target"   "CASTER"
+          "ModifierName"   "mod_cmd_restricted"
+       }
+    }
+    "Modifiers"
+    {
+       "mod_cmd_restricted"
+       {
+          "Passive"    "0"
+          "IsBuff"     "0"
+          "IsPurgable" "0"
+          "IsHidden"   "1"
+          "States"
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+          }
        }
     }
 
@@ -168,6 +227,7 @@
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+    "AbilityTextureName"   "sven_great_cleave"
 
     // Stats
     //-------------------------------------------------------------------------------------
@@ -175,7 +235,7 @@
     "AbilityCooldown"  "1"
     "AbilityManaCost"  "0"
     "AbilityChannelTime" "5"
-    "AbilityCastAnimation" "ACT_DOTA_VICTORY"
+    "AbilityCastAnimation" "ACT_DOTA_SHARPEN_WEAPON"
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -184,28 +244,60 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "damage_bonus" "100"
+            "damage_bonus" "110"
         }
     }
 
     "precache"
     {
         "particle" "particles/status_fx/status_effect_medus_stone_gaze.vpcf"
+        "particle" "particles/items_fx/black_king_bar_avatar.vpcf"
     }
 
     // Data Driven
     //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "mod_cmd_restricted"
+       }
+    }
+
     "OnChannelSucceeded"
     {
+       "RemoveModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "mod_cmd_restricted"
+       }
+
        "ApplyModifier"
        {
           "Target" "CASTER"
           "ModifierName" "modifier_evis"
        }
+       "FireSound"
+       {
+          "Target" "CASTER"
+          "EffectName" "DOTA_Item.BlackKingBar.Activate"
+       }
     }
 
     "Modifiers"
     {
+       "mod_cmd_restricted"
+       {
+          "Passive"    "0"
+          "IsBuff"     "0"
+          "IsPurgable" "0"
+          "IsHidden"   "1"
+          "States"
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+          }
+       }
         "modifier_evis"
          {
             "StatusEffectName" "particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
@@ -267,12 +359,15 @@
         }
     }
    }
+   
+
    "Berserk"
    {
 // General
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+    "AbilityTextureName"   "ogre_magi_bloodlust"
 
     // Stats
     //-------------------------------------------------------------------------------------
@@ -349,4 +444,182 @@
         }
     }
    }
+
+
+   "Plane_Walk"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityTextureName"   "spectre_spectral_dagger"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "30"
+    "AbilityManaCost"  "0"
+    "AbilityDuration"  "5"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "5"
+        }
+    }
+
+    "precache"
+    {
+      "particle"    "particles/status_fx/status_effect_frost_lich.vpcf"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
+
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+
+       "FireSound"
+       {
+          "Target"   "CASTER"
+          "EffectName"  "Hero_TemplarAssassin.Meld"
+       }
+
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "modifier_plane_walk"
+          "Duration"    "%duration"
+       }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_plane_walk"
+         {
+           "StatusEffectName" "particles/status_fx/status_effect_frost_lich.vpcf"
+           "StatusEffectPriority" "10"
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+
+            "States"
+            {
+               "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+
+            "Properties"
+            {
+            }
+        }
+    }
+   }
+
+
+
+   "Fade"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+    "AbilityTextureName"   "faceless_void_time_lock"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "10"
+    "AbilityManaCost"  "0"
+    "AbilityChannelTime" "3"
+    "AbilityCastAnimation" "ACT_DOTA_FLAIL"
+    "AnimationPlaybackRate" "0.2"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "hp_regen" "15"
+        }
+    }
+
+    "precache"
+    {
+        "soundfile"   "soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
+        "particle" "particles/status_fx/status_effect_frost_lich.vpcf"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnChannelSucceeded"
+    {
+       "FireSound"
+       {
+          "Target"   "CASTER"
+          "EffectName"  "Hero_TemplarAssassin.Meld"
+       }
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "modifier_fade"
+       }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_fade"
+         {
+           "StatusEffectName" "particles/status_fx/status_effect_frost_lich.vpcf"
+           "StatusEffectPriority" "10"
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+            "States"
+            {
+               "MODIFIER_STATE_DISARMED"  "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_ROOTED"    "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "OnTakeDamage"
+            {
+               "RemoveModifier"
+               {
+                  "Target"    "CASTER"
+                  "ModifierName" "modifier_fade"
+               }
+            }
+
+            "OnOrder"
+            {
+               "RemoveModifier"
+               {
+                  "Target"    "CASTER"
+                  "ModifierName" "modifier_fade"
+               }
+
+            }
+
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%hp_regen"
+            }
+        }
+    }
+   }
+
 }
