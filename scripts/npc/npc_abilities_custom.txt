@@ -14,7 +14,7 @@
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.5"
-    "AbilityCooldown"  "0"
+    "AbilityCooldown"  "5"
     "AbilityManaCost"  "0"
     "AbilityChannelTime" "4"
     "AbilityCastAnimation" "ACT_DOTA_ATTACK"
@@ -176,7 +176,7 @@
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.5"
-    "AbilityCooldown"  "1"
+    "AbilityCooldown"  "5"
     "AbilityManaCost"  "0"
     "AbilityChannelTime" "3"
     "AbilityCastAnimation" "ACT_DOTA_CHANNEL_ABILITY_1"
@@ -221,7 +221,7 @@
    }
 
 
-   "Eviscerate"
+   "Preparation"
    {
 // General
     //-------------------------------------------------------------------------------------
@@ -232,7 +232,7 @@
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.5"
-    "AbilityCooldown"  "1"
+    "AbilityCooldown"  "5"
     "AbilityManaCost"  "0"
     "AbilityChannelTime" "5"
     "AbilityCastAnimation" "ACT_DOTA_SHARPEN_WEAPON"
@@ -252,10 +252,15 @@
     {
         "particle" "particles/status_fx/status_effect_medus_stone_gaze.vpcf"
         "particle" "particles/items_fx/black_king_bar_avatar.vpcf"
+
+        "particle" "particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
+        "particle" "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
     }
 
     // Data Driven
     //-------------------------------------------------------------------------------------
+
     "OnSpellStart"
     {
        "ApplyModifier"
@@ -267,6 +272,11 @@
 
     "OnChannelSucceeded"
     {
+       "RunScript"
+       {
+          "ScriptFile"  "stop.lua"
+          "Function"    "stop"
+       }
        "RemoveModifier"
        {
           "Target" "CASTER"
@@ -276,7 +286,7 @@
        "ApplyModifier"
        {
           "Target" "CASTER"
-          "ModifierName" "modifier_evis"
+          "ModifierName" "modifier_prep"
        }
        "FireSound"
        {
@@ -298,7 +308,7 @@
              "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
           }
        }
-        "modifier_evis"
+        "modifier_prep"
          {
             "StatusEffectName" "particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
             "StatusEffectPriority" "10"
@@ -314,6 +324,24 @@
 
             "OnAttackLanded"
             {
+               "FireSound"
+               {
+                  "EffectName"   "Hero_SkeletonKing.CriticalStrike"
+                  "Target"       "CASTER"
+               }
+               "FireEffect"
+               {
+                  "EffectName"       "particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
+                  "EffectAttachType" "attach_sword"
+                  "Target"           "CASTER"
+               }
+               "FireEffect"
+               {
+                  "EffectName" "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+                  "EffectAttachType" "attach_hitloc"
+                  "Target" "TARGET"
+               }
+
                "Damage"
                {
                   "Target"    "TARGET"
@@ -324,7 +352,7 @@
                "RemoveModifier"
                {
                   "Target"    "CASTER"
-                  "ModifierName" "modifier_evis"
+                  "ModifierName" "modifier_prep"
                }
             }
 
@@ -340,7 +368,7 @@
                "RemoveModifier"
                {
                   "Target"    "CASTER"
-                  "ModifierName" "modifier_evis"
+                  "ModifierName" "modifier_prep"
                }
             }
 
@@ -349,7 +377,7 @@
                "RemoveModifier"
                {
                   "Target"    "CASTER"
-                  "ModifierName" "modifier_evis"
+                  "ModifierName" "modifier_prep"
                }
             }
 
@@ -550,7 +578,7 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "hp_regen" "15"
+            "hp_regen" "8"
         }
     }
 
@@ -564,6 +592,11 @@
     //-------------------------------------------------------------------------------------
     "OnChannelSucceeded"
     {
+       "RunScript"
+       {
+          "ScriptFile"  "stop.lua"
+          "Function"    "stop"
+       }
        "FireSound"
        {
           "Target"   "CASTER"

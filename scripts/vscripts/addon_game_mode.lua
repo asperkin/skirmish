@@ -16,6 +16,7 @@ function Precache( context )
    PrecacheUnitByNameSync("Forest_Footman", context)
    PrecacheUnitByNameSync("Siege_Golem", context)
    PrecacheUnitByNameSync("Ghost_Assassin", context)
+   PrecacheResource("soundfile","soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts", context)
 end
 
 -- Create the game mode when we activate
@@ -56,7 +57,7 @@ function spawnSiege(num)
 end   
 
 function spawnAssassin(num)
-   spawnUnits(0, "Ghost_Assassin", 80, 5900, num)
+   spawnUnits(0, "Ghost_Assassin", 270, 6000, num)
 end
 
 function spawnArmy() 
@@ -66,7 +67,7 @@ function spawnArmy()
    spawnHeadhunters(10)
    spawnFootmen(10)
    spawnSiege(4)
-   spawnAssassin(1)
+   spawnAssassin(2)
 
    -- dont run again
    return nil
