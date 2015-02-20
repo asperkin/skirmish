@@ -60,6 +60,11 @@ function spawnAssassin(num)
    spawnUnits(0, "Ghost_Assassin", 270, 6000, num)
 end
 
+function spawnControlPoints()
+   local unit = CreateUnitByName("Control_Point", Vector(2300,4100,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+   unit:SetControllableByPlayer(0, true)
+end
+
 function spawnArmy() 
    -- spawn player units
    print("in spawnUnits().")
@@ -68,6 +73,7 @@ function spawnArmy()
    spawnFootmen(10)
    spawnSiege(4)
    spawnAssassin(2)
+   spawnControlPoints()
 
    -- dont run again
    return nil

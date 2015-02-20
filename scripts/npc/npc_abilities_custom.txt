@@ -655,4 +655,173 @@
     }
    }
 
+
+   "Capture_Checker"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AURA"
+    "AbilityTextureName"   "faceless_void_time_lock"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_ALL"
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "0"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+       "01"
+       {
+            "var_type" "FIELD_INTEGER"
+            "radius" "250"
+
+       }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "hp_regen" "-25"
+        }
+    }
+
+    "precache"
+    {
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+
+    "Modifiers"
+    {
+        "modifier_capture_aura"
+         {
+            "Passive"    "1"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+            "States"
+            {
+               "MODIFIER_STATE_DISARMED"  "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_ROOTED"    "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "OnCreated"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"   "control_point.lua"
+                  "Function"     "the_fire_rises"
+               }
+            }
+
+
+            "ThinkInterval" "0.2"
+            "OnIntervalThink"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"    "control_point.lua"
+                  "Function"      "capture_check"
+                  "time_interval" "0.2"
+               }
+            }
+
+            "OnOwnerDied"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"   "control_point.lua"
+                  "Function"     ""
+               }
+            }
+
+            "Properties"
+            {
+            }
+        }
+    }
+   }
+
+   "CP_Properties"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"   "faceless_void_time_lock"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "0"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+       "01"
+       {
+            "var_type" "FIELD_INTEGER"
+            "radius" "250"
+
+       }
+    }
+
+    "precache"
+    {
+
+    }
+
+    "Modifiers" 
+    {
+       "mod_cp"
+       {
+          "Passive"    "1"
+          "Hidden"     "1"
+          "IsPurgable" "0"
+
+          States
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+          }
+
+          "OnCreated"
+          {
+             "RunScript"
+             {
+                "ScriptFile"   "control_point.lua"
+                "Function"     "the_fire_rises"
+             }
+          }
+
+
+          "ThinkInterval" "0.2"
+          "OnIntervalThink"
+          {
+             "RunScript"
+             {
+                "ScriptFile"    "control_point.lua"
+                "Function"      "capture_check"
+                "time_interval" "0.2"
+                "cap_time"      "5"
+                "unit_spawn_interval" "10"
+                "unit_name"     "Forest_Footman"
+                "radius"        "%radius"
+             }
+          }
+       }
+    }
+   } // -- end of CP_Properties
 }
