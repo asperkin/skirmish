@@ -71,7 +71,7 @@
        "ApplyModifier"
        {
           "Target" "CASTER"
-          "ModifierName" "mod_stunned"
+          "ModifierName" "mod_cmd_restricted"
        }
     }
 
@@ -656,100 +656,304 @@
    }
 
 
-   "Capture_Checker"
+   "t_regrowth"
    {
 // General
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
-    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AURA"
-    "AbilityTextureName"   "faceless_void_time_lock"
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityTextureName"   "omniknight_purification"
 
     // Stats
     //-------------------------------------------------------------------------------------
-    "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_BOTH"
-    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_ALL"
-    "AbilityCastPoint" "0.5"
-    "AbilityCooldown"  "0"
-    "AbilityManaCost"  "0"
+    "AbilityCastRange" "600"
+    "AbilityCastPoint" "0.1"
+    "AbilityCooldown"  "15 13 11"
+    "AbilityManaCost"  "30"
+    "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC"
 
     // Special
     //-------------------------------------------------------------------------------------
     "AbilitySpecial"
     {
-       "01"
-       {
+        "01"
+        {
             "var_type" "FIELD_INTEGER"
-            "radius" "250"
-
-       }
+            "hp_per_sec" "10 17 25"
+        }
         "02"
         {
             "var_type" "FIELD_INTEGER"
-            "hp_regen" "-25"
+            "duration" "15"
         }
     }
 
     "precache"
     {
+      "particle"    "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf" 
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+
     }
 
     // Data Driven
     //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+
+       "FireSound"
+       {
+          "Target"   "TARGET"
+          "EffectName"  "Hero_Omniknight.Purification"
+       }
+
+       "ApplyModifier"
+       {
+          "Target" "TARGET"
+          "ModifierName" "modifier_t_regrowth"
+          "Duration"    "%duration"
+       }
+
+    }
 
     "Modifiers"
     {
-        "modifier_capture_aura"
+        "modifier_t_regrowth"
          {
-            "Passive"    "1"
+            "Passive"    "0"
             "IsBuff"     "1"
-            "IsPurgable" "0"
+            "IsPurgable" "1"
             "IsHidden"   "0"
-
-            "States"
-            {
-               "MODIFIER_STATE_DISARMED"  "MODIFIER_STATE_VALUE_ENABLED"
-               "MODIFIER_STATE_ROOTED"    "MODIFIER_STATE_VALUE_ENABLED"
-               "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
-            }
-
-            "OnCreated"
-            {
-               "RunScript"
-               {
-                  "ScriptFile"   "control_point.lua"
-                  "Function"     "the_fire_rises"
-               }
-            }
-
-
-            "ThinkInterval" "0.2"
-            "OnIntervalThink"
-            {
-               "RunScript"
-               {
-                  "ScriptFile"    "control_point.lua"
-                  "Function"      "capture_check"
-                  "time_interval" "0.2"
-               }
-            }
-
-            "OnOwnerDied"
-            {
-               "RunScript"
-               {
-                  "ScriptFile"   "control_point.lua"
-                  "Function"     ""
-               }
-            }
 
             "Properties"
             {
+               "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%hp_per_sec"
+            }
+            
+            "OnCreated"
+            {
+               "AttachEffect"
+               {
+                  "EffectName" "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+                  "EffectAttachType"   "follow_origin"
+                  "radius" "80"
+                  "Target" "TARGET"
+               }
+            }
+            
+            "OnTakeDamage"
+            {
+               "RemoveModifier"
+               {
+                  "Target" "CASTER"
+                  "ModifierName" "modifier_t_regrowth"
+               }
             }
         }
     }
    }
 
-   "CP_Properties"
+
+   "t_lightning_shield"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityTextureName"   "dark_seer_ion_shell"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastRange" "600"
+    "AbilityCastPoint" "0.1"
+    "AbilityCooldown"  "15"
+    "AbilityManaCost"  "50"
+    "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "dmg_per_sec" "15 25 35"
+        }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "8 10 12"
+        }
+    }
+
+    "precache"
+    {
+      "particle" "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+
+       "FireSound"
+       {
+          "Target"   "TARGET"
+          "EffectName"  "Hero_DarkSeer.IonShell"
+       }
+
+       "ApplyModifier"
+       {
+          "Target" "TARGET"
+          "ModifierName" "modifier_t_lightning_shield"
+          "Duration"    "%duration"
+       }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_t_lightning_shield"
+         {
+            "Passive"    "0"
+            "IsBuff"     "0"
+            "IsDebuff"   "1"
+            "IsPurgable" "1"
+            "IsHidden"   "0"
+
+            "Properties"
+            {
+            }
+
+            "ThinkInterval" "1"
+            "OnIntervalThink"
+            {
+            }
+            
+        }
+    }
+   }
+
+   "hero_gallop"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+    "AbilityTextureName"   "chaos_knight_phantasm"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.1"
+    "AbilityCooldown"  "30"
+    "AbilityManaCost"  "20"
+    "AbilityChannelTime" "4"
+    "AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_1"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "speed_boost" "100"
+        }
+    }
+
+    "precache"
+    {
+      "particle"    "particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnChannelSucceeded"
+    {
+
+       "FireSound"
+       {
+          "Target"   "CASTER"
+          "EffectName"  "Hero_TemplarAssassin.Meld"
+       }
+
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "modifier_gallop"
+       }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_gallop"
+         {
+           "Passive"    "0"
+           "IsBuff"     "1"
+           "IsPurgable" "0"
+           "IsHidden"   "0"
+
+
+           "OnCreated"
+           {
+              "AttachEffect"
+               {
+                  "EffectName" "particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+                  "EffectAttachType"   "follow_origin"
+                  "Target" "CASTER"
+               }            
+           }
+
+           "Properties"
+           {
+              "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%speed_boost"
+           }
+           "OnAttackStart"
+           {
+               "RemoveModifier"
+               {
+                  "Target" "CASTER"
+                  "ModifierName" "modifier_gallop"
+               }
+           }
+           "OnDealDamage"
+           {
+               "RemoveModifier"
+               {
+                  "Target" "CASTER"
+                  "ModifierName" "modifier_gallop"
+               }
+           }
+           "OnTakeDamage"
+           {
+               "RemoveModifier"
+               {
+                  "Target" "CASTER"
+                  "ModifierName" "modifier_gallop"
+               }
+           }
+           "OnAbilityStart"
+           {
+               "RemoveModifier"
+               {
+                  "Target" "CASTER"
+                  "ModifierName" "modifier_gallop"
+               }
+           }
+         }
+    }
+   }
+
+
+
+   "CP_Footman"
    {
 // General
     //-------------------------------------------------------------------------------------
@@ -782,7 +986,7 @@
 
     "Modifiers" 
     {
-       "mod_cp"
+       "mod_cp_footman"
        {
           "Passive"    "1"
           "Hidden"     "1"
@@ -791,9 +995,9 @@
           States
           {
              "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-             "MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
           }
 
@@ -801,9 +1005,10 @@
           {
              "RunScript"
              {
-                "ScriptFile"   "control_point.lua"
-                "Function"     "the_fire_rises"
+                "ScriptFile"    "control_point.lua"
+                "Function"      "zero_mana"
              }
+
           }
 
 
@@ -816,12 +1021,169 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_spawn_interval" "10"
+                "unit_spawn_interval" "20"
                 "unit_name"     "Forest_Footman"
                 "radius"        "%radius"
              }
           }
        }
     }
-   } // -- end of CP_Properties
+   } // -- end of CP_Footman
+
+
+   "CP_Headhunter"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"   "faceless_void_time_lock"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "0"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+       "01"
+       {
+            "var_type" "FIELD_INTEGER"
+            "radius" "250"
+
+       }
+    }
+
+    "precache"
+    {
+
+    }
+
+    "Modifiers" 
+    {
+       "mod_cp_headhunter"
+       {
+          "Passive"    "1"
+          "Hidden"     "1"
+          "IsPurgable" "0"
+
+          States
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+          }
+
+          "OnCreated"
+          {
+             "RunScript"
+             {
+                "ScriptFile"    "control_point.lua"
+                "Function"      "zero_mana"
+             }
+
+          }
+
+
+          "ThinkInterval" "0.2"
+          "OnIntervalThink"
+          {
+             "RunScript"
+             {
+                "ScriptFile"    "control_point.lua"
+                "Function"      "capture_check"
+                "time_interval" "0.2"
+                "cap_time"      "5"
+                "unit_spawn_interval" "20"
+                "unit_name"     "Gnoll_Headhunter"
+                "radius"        "%radius"
+             }
+          }
+       }
+    }
+   } // -- end of CP_Headhunter
+
+
+   "CP_Golem"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"   "faceless_void_time_lock"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "0"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+       "01"
+       {
+            "var_type" "FIELD_INTEGER"
+            "radius" "250"
+
+       }
+    }
+
+    "precache"
+    {
+
+    }
+
+    "Modifiers" 
+    {
+       "mod_cp_golem"
+       {
+          "Passive"    "1"
+          "Hidden"     "1"
+          "IsPurgable" "0"
+
+          States
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+          }
+
+          "OnCreated"
+          {
+             "RunScript"
+             {
+                "ScriptFile"    "control_point.lua"
+                "Function"      "zero_mana"
+             }
+
+          }
+
+          "ThinkInterval" "0.2"
+          "OnIntervalThink"
+          {
+             "RunScript"
+             {
+                "ScriptFile"    "control_point.lua"
+                "Function"      "capture_check"
+                "time_interval" "0.2"
+                "cap_time"      "5"
+                "unit_spawn_interval" "60"
+                "unit_name"     "Siege_Golem"
+                "radius"        "%radius"
+             }
+          }
+       }
+    }
+   } // -- end of CP_Golem
+
 }
+

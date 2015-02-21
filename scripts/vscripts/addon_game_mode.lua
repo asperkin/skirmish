@@ -16,7 +16,11 @@ function Precache( context )
    PrecacheUnitByNameSync("Forest_Footman", context)
    PrecacheUnitByNameSync("Siege_Golem", context)
    PrecacheUnitByNameSync("Ghost_Assassin", context)
-   PrecacheResource("soundfile","soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts", context)
+   PrecacheUnitByNameSync("npc_hero_tactician", context)
+
+   PrecacheUnitByNameSync("Control_Point_Footman", context)
+   PrecacheUnitByNameSync("Control_Point_Headhunter", context)
+   PrecacheUnitByNameSync("Control_Point_Golem", context)
 end
 
 -- Create the game mode when we activate
@@ -46,23 +50,42 @@ end
 
 function spawnFootmen(num)
     spawnUnits(0, "Forest_Footman", 80, 5500, num)
-    -- spawn for other player as well
+    spawnUnits(5, "Forest_Footman", 80, -5500, num)
 end
 function spawnHeadhunters(num)
     spawnUnits(0, "Gnoll_Headhunter", 80, 5600, num)
+    spawnUnits(5, "Gnoll_Headhunter", 80, -5600, num)
 end
 
 function spawnSiege(num)
    spawnUnits(0, "Siege_Golem", 200, 5800, num)
+   spawnUnits(5, "Siege_Golem", 200, -5800, num)
 end   
 
 function spawnAssassin(num)
    spawnUnits(0, "Ghost_Assassin", 270, 6000, num)
+   spawnUnits(5, "Ghost_Assassin", 270, -6000, num)
 end
 
 function spawnControlPoints()
-   local unit = CreateUnitByName("Control_Point", Vector(2300,4100,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-   unit:SetControllableByPlayer(0, true)
+   --gross code goes here
+    CreateUnitByName("Control_Point_Footman", Vector(2304,4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Footman", Vector(-2304,4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Footman", Vector(2304,-4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Footman", Vector(-2304,-4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+
+
+    CreateUnitByName("Control_Point_Headhunter", Vector(5631,4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Headhunter", Vector(-5631,4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Headhunter", Vector(5631,-4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Headhunter", Vector(-5631,-4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+
+    CreateUnitByName("Control_Point_Golem", Vector(2304,1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Golem", Vector(-2304,1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Golem", Vector(2304,-1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Golem", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+
+
 end
 
 function spawnArmy() 
