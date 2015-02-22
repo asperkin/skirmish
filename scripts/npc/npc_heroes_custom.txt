@@ -12,8 +12,8 @@
       //----------------------------------------------------------------
       "AbilityLayout" "5"
       "Ability1" "t_regrowth"
-      "Ability2" "t_lightning_shield"
-      "Ability3" "t_"
+      "Ability2" "t_immolate"
+      "Ability3" "t_far_sight"
       "Ability4" ""
       "Ability5" "hero_gallop"
       "Ability6" ""
@@ -25,8 +25,8 @@
       // Attack
       //----------------------------------------------------------------
       "AttackCapabilities" "DOTA_UNIT_CAP_RANGED_ATTACK"
-      "AttackDamageMin" "2.0"
-      "AttackDamageMax" "8.0"
+      "AttackDamageMin" "5.0"
+      "AttackDamageMax" "5.0"
       "AttackDamageType" "DAMAGE_TYPE_PHYSICAL"
       "AttackRate" "2.13"
       "AttackAnimationPoint" "0.55"
@@ -67,7 +67,7 @@
       // Vision
       //----------------------------------------------------------------
       "VisionDaytimeRange" "1800"
-      "VisionNighttimeRange" "800"
+      "VisionNighttimeRange" "1200"
       // Team
       //----------------------------------------------------------------
       "TeamName" "DOTA_TEAM_NEUTRALS"

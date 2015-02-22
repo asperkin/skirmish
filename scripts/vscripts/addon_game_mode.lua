@@ -21,6 +21,7 @@ function Precache( context )
    PrecacheUnitByNameSync("Control_Point_Footman", context)
    PrecacheUnitByNameSync("Control_Point_Headhunter", context)
    PrecacheUnitByNameSync("Control_Point_Golem", context)
+   PrecacheUnitByNameSync("Control_Point_Assassin", context)
 end
 
 -- Create the game mode when we activate
@@ -86,17 +87,33 @@ function spawnControlPoints()
     CreateUnitByName("Control_Point_Golem", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 
+    CreateUnitByName("Control_Point_Assassin", Vector(0,3328,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("Control_Point_Assassin", Vector(0,-3328,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+
+
+end
+
+--hacky
+function levelUpGallop()
+   heroes = HeroList:GetAllHeroes()
+   for _, h in pairs(heroes) do
+      h:SetAbilityPoints(2)
+      h:UpgradeAbility(h:GetAbilityByIndex(3)) -- ability 5
+   end
+      
 end
 
 function spawnArmy() 
    -- spawn player units
-   print("in spawnUnits().")
+   print("in spawnArmy().")
 
    spawnHeadhunters(10)
    spawnFootmen(10)
    spawnSiege(4)
    spawnAssassin(2)
    spawnControlPoints()
+
+   levelUpGallop()
 
    -- dont run again
    return nil

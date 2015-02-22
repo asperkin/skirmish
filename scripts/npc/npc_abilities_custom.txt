@@ -144,7 +144,7 @@
                   {
                      "Center"   "TARGET"
                      "Radius"   "%radius"
-                     "Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+                     "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
                      "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
                   }
                "Type"        "DAMAGE_TYPE_PHYSICAL"
@@ -663,13 +663,14 @@
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
     "AbilityTextureName"   "omniknight_purification"
+    "MaxLevel"         "3"
 
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastRange" "600"
     "AbilityCastPoint" "0.1"
-    "AbilityCooldown"  "15 13 11"
-    "AbilityManaCost"  "30"
+    "AbilityCooldown"  "15 12 9"
+    "AbilityManaCost"  "30 34 38"
     "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC"
 
@@ -680,12 +681,12 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "hp_per_sec" "10 17 25"
+            "hp_per_sec" "12 18 25"
         }
         "02"
         {
             "var_type" "FIELD_INTEGER"
-            "duration" "15"
+            "duration" "15 15 15"
         }
     }
 
@@ -737,7 +738,6 @@
                {
                   "EffectName" "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
                   "EffectAttachType"   "follow_origin"
-                  "radius" "80"
                   "Target" "TARGET"
                }
             }
@@ -746,7 +746,7 @@
             {
                "RemoveModifier"
                {
-                  "Target" "CASTER"
+                  "Target" "UNIT"
                   "ModifierName" "modifier_t_regrowth"
                }
             }
@@ -755,22 +755,24 @@
    }
 
 
-   "t_lightning_shield"
+   "t_immolate"
    {
 // General
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-    "AbilityTextureName"   "dark_seer_ion_shell"
+    "AbilityTextureName"   "ember_spirit_sleight_of_fist"
+    "MaxLevel"         "3"
 
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastRange" "600"
-    "AbilityCastPoint" "0.1"
+    "AbilityCastPoint" "0.1 0.1 0.1"
     "AbilityCooldown"  "15"
-    "AbilityManaCost"  "50"
+    "AbilityManaCost"  "50 55 60"
     "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_BOTH"
     "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+    "AbilityUnitDamageType" "DAMAGE_TYPE_MAGICAL"
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -779,7 +781,7 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "dmg_per_sec" "15 25 35"
+            "dmg_per_sec" "25 40 55"
         }
         "02"
         {
@@ -790,9 +792,8 @@
 
     "precache"
     {
-      "particle" "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
-      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-
+      "particle" "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+      "soundfile" "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
     }
 
     // Data Driven
@@ -803,13 +804,13 @@
        "FireSound"
        {
           "Target"   "TARGET"
-          "EffectName"  "Hero_DarkSeer.IonShell"
+          "EffectName"  "Hero_EmberSpirit.FlameGuard.Cast"
        }
 
        "ApplyModifier"
        {
           "Target" "TARGET"
-          "ModifierName" "modifier_t_lightning_shield"
+          "ModifierName" "modifier_t_immolate"
           "Duration"    "%duration"
        }
 
@@ -817,26 +818,135 @@
 
     "Modifiers"
     {
-        "modifier_t_lightning_shield"
+        "modifier_t_immolate"
          {
             "Passive"    "0"
-            "IsBuff"     "0"
-            "IsDebuff"   "1"
+            "IsBuff"     "1"
+            "IsDebuff"   "0"
             "IsPurgable" "1"
             "IsHidden"   "0"
 
             "Properties"
             {
+               "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%dmg_per_sec"
+            }
+            "OnCreated"
+            {
+              "AttachEffect"
+               {
+                  "EffectName" "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+                  "EffectAttachType"   "attach_origin"
+                  "Target" "TARGET"
+               }            
             }
 
             "ThinkInterval" "1"
             "OnIntervalThink"
             {
+               "Damage"
+               {
+                  "Target"
+                  {
+                     "Center"   "TARGET"
+                     "Radius"   "150"
+                     "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+                     "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                  }
+                  "Type"        "DAMAGE_TYPE_MAGICAL"
+                  "Damage"      "%dmg_per_sec"
+               }
             }
-            
+         } // end of modifier_t_immolate
         }
     }
-   }
+
+    "t_far_sight"
+    {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityTextureName"   "dark_seer_surge"
+    "MaxLevel"         "3"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5 0.5 0.5"
+    "AbilityCooldown"  "20"
+    "AbilityManaCost"  "50 55 60"
+    "AoERadius"        "%radius"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "radius" "600 1200 1800"
+        }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "4 10 20"
+        }
+    }
+
+    "precache"
+    {
+      "particle" "particles/items_fx/dust_of_appearance.vpcf"
+      "soundfile" "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+      "RunScript"
+      {
+         "ScriptFile" "far_sight.lua"
+         "Function" "far_sight"
+         "Target" "POINT"
+      }
+      "CreateThinker"
+      {
+         "ModifierName" "modifier_t_far_sight"
+         "Target" "POINT"
+      }
+      "FireSound"
+      {
+         "EffectName"   "Hero_BountyHunter.Track.Cast"
+         "Target"       "POINT"
+      }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_t_far_sight"
+         {
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsDebuff"   "0"
+            "IsPurgable" "0"
+            "IsHidden"   "1"
+
+            "Duration"   "%duration"
+            "Aura"       "modifier_revealed"
+            "Aura_Radius" "%radius"
+            "Aura_Teams"  "DOTA_UNIT_TARGET_TEAM_ENEMY"
+            "Aura_Types"  "DOTA_UNIT_TARGET_ALL"
+         }
+
+         "modifier_revealed"
+         {
+            "States"
+            {
+               "MODIFIER_STATE_INVISIBLE"    "MODIFIER_STATE_VALUE_DISABLED"
+            }
+         }
+     }
+    }
 
    "hero_gallop"
    {
@@ -845,6 +955,7 @@
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
     "AbilityTextureName"   "chaos_knight_phantasm"
+    "MaxLevel"         "1"
 
     // Stats
     //-------------------------------------------------------------------------------------
@@ -939,7 +1050,7 @@
                   "ModifierName" "modifier_gallop"
                }
            }
-           "OnAbilityStart"
+           "OnAbilityExecuted"
            {
                "RemoveModifier"
                {
@@ -952,14 +1063,13 @@
    }
 
 
-
    "CP_Footman"
    {
 // General
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "AbilityTextureName"   "faceless_void_time_lock"
+    "AbilityTextureName"   "omniknight_repel"
 
     // Stats
     //-------------------------------------------------------------------------------------
@@ -1021,7 +1131,6 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_spawn_interval" "20"
                 "unit_name"     "Forest_Footman"
                 "radius"        "%radius"
              }
@@ -1037,7 +1146,7 @@
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "AbilityTextureName"   "faceless_void_time_lock"
+    "AbilityTextureName"   "omniknight_repel"
 
     // Stats
     //-------------------------------------------------------------------------------------
@@ -1099,7 +1208,6 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_spawn_interval" "20"
                 "unit_name"     "Gnoll_Headhunter"
                 "radius"        "%radius"
              }
@@ -1115,7 +1223,7 @@
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "AbilityTextureName"   "faceless_void_time_lock"
+    "AbilityTextureName"   "omniknight_repel"
 
     // Stats
     //-------------------------------------------------------------------------------------
@@ -1176,7 +1284,6 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_spawn_interval" "60"
                 "unit_name"     "Siege_Golem"
                 "radius"        "%radius"
              }
@@ -1185,5 +1292,79 @@
     }
    } // -- end of CP_Golem
 
+   "CP_Assassin"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"   "omniknight_repel"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "0"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+       "01"
+       {
+            "var_type" "FIELD_INTEGER"
+            "radius" "250"
+
+       }
+    }
+
+    "precache"
+    {
+
+    }
+
+    "Modifiers" 
+    {
+       "mod_cp_assassin"
+       {
+          "Passive"    "1"
+          "Hidden"     "1"
+          "IsPurgable" "0"
+
+          States
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+          }
+
+          "OnCreated"
+          {
+             "RunScript"
+             {
+                "ScriptFile"    "control_point.lua"
+                "Function"      "zero_mana"
+             }
+
+          }
+
+          "ThinkInterval" "0.2"
+          "OnIntervalThink"
+          {
+             "RunScript"
+             {
+                "ScriptFile"    "control_point.lua"
+                "Function"      "capture_check"
+                "time_interval" "0.2"
+                "cap_time"      "5"
+                "unit_name"     "Ghost_Assassin"
+                "radius"        "%radius"
+             }
+          }
+       }
+    }
+   } // -- end of CP_Assassin
 }
 
