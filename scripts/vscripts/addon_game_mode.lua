@@ -69,27 +69,54 @@ function spawnAssassin(num)
 end
 
 function spawnControlPoints()
-   --gross code goes here
+   --gross code goes here. spawn the sightgivers here too
     CreateUnitByName("Control_Point_Footman", Vector(2304,4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(2304,4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(2304,4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Footman", Vector(-2304,4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(-2304,4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(-2304,4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Footman", Vector(2304,-4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(2304,-4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(2304,-4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Footman", Vector(-2304,-4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(-2304,-4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(-2304,-4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
 
 
     CreateUnitByName("Control_Point_Headhunter", Vector(5631,4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(5631,4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(5631,4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Headhunter", Vector(-5631,4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(-5631,4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(-5631,4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Headhunter", Vector(5631,-4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(5631,-4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(5631,-4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Headhunter", Vector(-5631,-4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(-5631,-4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(-5631,-4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
 
     CreateUnitByName("Control_Point_Golem", Vector(2304,1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(2304,1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(2304,1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Golem", Vector(-2304,1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(-2304,1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(-2304,1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Golem", Vector(2304,-1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(2304,-1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(2304,-1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Golem", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
 
 
     CreateUnitByName("Control_Point_Assassin", Vector(0,3328,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    CreateUnitByName("invisible_man", Vector(0,3328,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(0,3328,0), true, nil, nil, DOTA_TEAM_BADGUYS)
     CreateUnitByName("Control_Point_Assassin", Vector(0,-3328,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-
+    CreateUnitByName("invisible_man", Vector(0,-3328,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    CreateUnitByName("invisible_man", Vector(0,-3328,0), true, nil, nil, DOTA_TEAM_BADGUYS)
 
 end
 
@@ -107,9 +134,9 @@ function spawnArmy()
    -- spawn player units
    print("in spawnArmy().")
 
-   spawnHeadhunters(10)
-   spawnFootmen(10)
-   spawnSiege(4)
+   spawnHeadhunters(8)
+   spawnFootmen(8)
+   spawnSiege(3)
    spawnAssassin(2)
    spawnControlPoints()
 
