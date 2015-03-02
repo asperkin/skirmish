@@ -47,7 +47,7 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"25"		// Experience earn.
+		"BountyXP"					"35"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -126,12 +126,12 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"RingRadius"				"50"
+		"RingRadius"				"45"
 		"HealthBarOffset"			"170"
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"30"		// Experience earn.
+		"BountyXP"					"40"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -217,7 +217,7 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"70"		// Experience earn.
+		"BountyXP"					"80"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -303,7 +303,7 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"40"		// Experience earn.
+		"BountyXP"					"60"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -696,7 +696,7 @@
 		//----------------------------------------------------------------
 		"StatusHealth"				"101"		// Base health.
 		"StatusHealthRegen"		"0"		// Health regeneration rate.
-		"StatusMana"				"210"		// UNIT SPAWN INTERVAL 
+		"StatusMana"				"200"		// UNIT SPAWN INTERVAL 
 		"StatusManaRegen"			"0"		// Mana regeneration rate.		 
 		
 		// Vision

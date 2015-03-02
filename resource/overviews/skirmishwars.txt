@@ -4,5 +4,7 @@ skirmishwars
 	pos_x -8192
 	pos_y 8192
 	scale 16.000
+   dota_unit_use_player_color 1
+   dota_friendly_color_b 0.8
 }
 

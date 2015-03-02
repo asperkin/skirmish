@@ -45,14 +45,8 @@
       "AttributeAgilityGain" "1"
       // Bounty
       //----------------------------------------------------------------
-      "BountyGoldMin" "38.0"
-      "BountyGoldMax" "54.0"
-      // Building Cost Stats
-      //----------------------------------------------------------------
-      "GoldCost" "425"
-      "LumberCost" "100"
-      "FoodCost" "0" //and 5 after theres more than 1 built
-      "BuildTime" "55"
+      "BountyGoldMin" "0"
+      "BountyGoldMax" "0"
       // Movement
       //----------------------------------------------------------------
       "MovementCapabilities" "DOTA_UNIT_CAP_MOVE_GROUND"
@@ -60,8 +54,8 @@
       "MovementTurnRate" "0.5"
       // Status
       //----------------------------------------------------------------
-      "StatusHealth" "100"
-      "StatusHealthRegen" "0.25"
+      "StatusHealth" "110"
+      "StatusHealthRegen" "1"
       "StatusMana" "0"
       "StatsManaRegen" "0.01"
       // Vision

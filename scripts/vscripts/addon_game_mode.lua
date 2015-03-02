@@ -27,9 +27,13 @@ end
 -- Create the game mode when we activate
 function Activate()
 	GameRules.AddonTemplate = CAddonTemplateGameMode()
+   GameRules.AddonTemplate:InitGameMode()
+
 	
    GameRules:GetGameModeEntity():SetThink(spawnArmy, 2)
+   
 end
+
 
 -- generic unit spawning. istep needed for different unit widths
 function spawnUnits(player, unit_name, istep, ycoord, num)
@@ -68,56 +72,32 @@ function spawnAssassin(num)
    spawnUnits(5, "Ghost_Assassin", 270, -6000, num)
 end
 
+function spawnPoint(name, x, y, z)
+   CreateUnitByName(name, Vector(x,y,z), true, nil, nil, DOTA_TEAM_NEUTRALS)
+   CreateUnitByName("invisible_man", Vector(x,y,z), true, nil, nil, DOTA_TEAM_GOODGUYS)
+   CreateUnitByName("invisible_man", Vector(x,y,z), true, nil, nil, DOTA_TEAM_BADGUYS)
+end
 function spawnControlPoints()
    --gross code goes here. spawn the sightgivers here too
-    CreateUnitByName("Control_Point_Footman", Vector(2304,4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(2304,4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(2304,4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Footman", Vector(-2304,4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(-2304,4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(-2304,4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Footman", Vector(2304,-4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(2304,-4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(2304,-4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Footman", Vector(-2304,-4096,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(-2304,-4096,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(-2304,-4096,0), true, nil, nil, DOTA_TEAM_BADGUYS)
+   spawnPoint("Control_Point_Footman", 2304, 4096, 0)
+   spawnPoint("Control_Point_Footman", -2304, 4096, 0)
+   spawnPoint("Control_Point_Footman", 2304, -4096, 0)
+   spawnPoint("Control_Point_Footman", -2304, -4096, 0)
 
 
-    CreateUnitByName("Control_Point_Headhunter", Vector(5631,4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(5631,4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(5631,4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Headhunter", Vector(-5631,4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(-5631,4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(-5631,4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Headhunter", Vector(5631,-4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(5631,-4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(5631,-4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Headhunter", Vector(-5631,-4864,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(-5631,-4864,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(-5631,-4864,0), true, nil, nil, DOTA_TEAM_BADGUYS)
+   spawnPoint("Control_Point_Headhunter", 5631, 4864, 0)
+   spawnPoint("Control_Point_Headhunter", -5631, 4864, 0)
+   spawnPoint("Control_Point_Headhunter", 5631, -4864, 0)
+   spawnPoint("Control_Point_Headhunter", -5631, -4864, 0)
 
-    CreateUnitByName("Control_Point_Golem", Vector(2304,1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(2304,1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(2304,1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Golem", Vector(-2304,1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(-2304,1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(-2304,1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Golem", Vector(2304,-1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(2304,-1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(2304,-1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Golem", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(-2304,-1280,0), true, nil, nil, DOTA_TEAM_BADGUYS)
+   spawnPoint("Control_Point_Golem", 2304, 1280, 0)
+   spawnPoint("Control_Point_Golem", -2304, 1280, 0)
+   spawnPoint("Control_Point_Golem", 2304, -1280, 0)
+   spawnPoint("Control_Point_Golem", -2304, -1280, 0)
 
 
-    CreateUnitByName("Control_Point_Assassin", Vector(0,3328,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(0,3328,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(0,3328,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    CreateUnitByName("Control_Point_Assassin", Vector(0,-3328,0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-    CreateUnitByName("invisible_man", Vector(0,-3328,0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-    CreateUnitByName("invisible_man", Vector(0,-3328,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-
+   spawnPoint("Control_Point_Assassin", 0, 3328, 0)
+   spawnPoint("Control_Point_Assassin", 0, -3328, 0)
 end
 
 --hacky
@@ -134,20 +114,31 @@ function spawnArmy()
    -- spawn player units
    print("in spawnArmy().")
 
-   spawnHeadhunters(8)
-   spawnFootmen(8)
-   spawnSiege(3)
-   spawnAssassin(2)
+   spawnHeadhunters(6)
+   spawnFootmen(6)
+   spawnSiege(2)
+   spawnAssassin(1)
    spawnControlPoints()
 
-   levelUpGallop()
 
    -- dont run again
    return nil
 end   
 
+function CAddonTemplateGameMode:onHeroPick(event)
+   print("onHeroPick()")
+   
+   --level up gallop
+   local hero = EntIndexToHScript(event.heroindex)
+   hero:SetAbilityPoints(2)
+   hero:UpgradeAbility(hero:GetAbilityByIndex(3))
+end
+
+
 function CAddonTemplateGameMode:InitGameMode()
 	print( "Template addon is loaded." )
+   ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(CAddonTemplateGameMode, 'onHeroPick'), self)
+
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 end
 
