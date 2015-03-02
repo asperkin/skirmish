@@ -57,7 +57,7 @@
       "StatusHealth" "110"
       "StatusHealthRegen" "1"
       "StatusMana" "0"
-      "StatsManaRegen" "0.01"
+      "StatsManaRegen" "0.02"
       // Vision
       //----------------------------------------------------------------
       "VisionDaytimeRange" "1800"
