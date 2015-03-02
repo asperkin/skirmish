@@ -1,4 +1,7 @@
 --Some planning and advice from Noya
+local num_points = 14
+local goodguy_points = 0
+local badguy_points = 0
 
 function set_rally(event)
    print("here")
@@ -46,13 +49,29 @@ function capture_check(event)
             if caster:GetHealth() <= 2
             then
                --teamchange
+               local prevTeam = caster:GetTeam()
                caster:SetTeam(cappingTeam)
+
                if cappingTeam == DOTA_TEAM_GOODGUYS
                then
                   caster:SetControllableByPlayer(0, true)
+                  goodguy_points = goodguy_points + 1
+                  if prevTeam == DOTA_TEAM_BADGUYS 
+                  then badguy_points = badguy_points - 1 end
+                  if goodguy_points == num_points
+                  then
+                     GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+                  end
                elseif cappingTeam == DOTA_TEAM_BADGUYS
                then
                   caster:SetControllableByPlayer(5, true)
+                  badguy_points = badguy_points + 1
+                  if prevTeam == DOTA_TEAM_GOODGUYS
+                  then goodguy_points = goodguy_points - 1 end
+                  if badguy_points == num_points
+                  then
+                     GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+                  end
                end
                --restore hp
                caster:SetHealth(caster:GetMaxHealth())
