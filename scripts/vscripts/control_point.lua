@@ -121,7 +121,7 @@ function capture_check(event)
             if caster.rally ~= nil
             then
                print("moving")
-               Timers:CreateTimer(1, function() unit:MoveToPosition(caster.rally) end)
+               unit:MoveToPosition(caster.rally)
             end
          end
       end

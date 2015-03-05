@@ -91,6 +91,11 @@
 
     "OnChannelSucceeded"
     {
+        "RunScript"
+        {
+           "ScriptFile" "siege_golem.lua"
+           "Function"   "remove_movement"
+        }
         "ApplyModifier"
         {
             "Target"       "CASTER"
@@ -124,11 +129,6 @@
             "IsBuff"     "1"
             "IsPurgable" "0"
             "IsHidden"   "0"
-
-            "States"
-            {
-               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
-            }
 
             "OnAttackLanded"
             {
@@ -165,7 +165,6 @@
             {
                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%atk_speed"
-               "MODIFIER_PROPERTY_DISABLE_TURNING" "1"
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%range"
                "MODIFIER_PROPERTY_BONUS_DAY_VISION" "%vision_bonus"
                "MODIFIER_PROPERTY_BONUS_NIGHT_VISION" "%vision_bonus"
@@ -191,6 +190,11 @@
 
     "OnSpellStart"
     {
+       "RunScript"
+       {
+          "ScriptFile"  "siege_golem.lua"
+          "Function"    "is_off_check"
+       }
        "ApplyModifier"
        {
           "Target"   "CASTER"
@@ -200,6 +204,11 @@
 
     "OnChannelFinish"
     {
+       "RunScript"
+       {
+          "ScriptFile"  "siege_golem.lua"
+          "Function"    "restore_movement"
+       }
        "RemoveModifier"
        {
           "Target"   "CASTER"
@@ -271,11 +280,6 @@
 
     "OnSpellStart"
     {
-       "RunScript"
-       {
-          "ScriptFile"  "forest_footman.lua"
-          "Function"    "already_on_check"
-       }
        "ApplyModifier"
        {
           "Target" "CASTER"
@@ -965,12 +969,122 @@
      }
    }
 
+   "t_absolute_zero"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityTextureName"   "ancient_apparition_ice_vortex"
+    "AbilityType"		"DOTA_ABILITY_TYPE_ULTIMATE"
+    "MaxLevel"         "1"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.1"
+    "AbilityCastRange"				"650"
+    "AbilityCastPoint"				"0.3"
+    "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+    "AbilityCooldown"  "70"
+    "AbilityManaCost"  "65"
+    "AoERadius"        "%radius"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "radius" "500"
+        }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "5"
+        }
+    }
+
+    "precache"
+    {
+      "particle" "particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+      "particle" "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+      "soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+      "RunScript"
+      {
+         "ScriptFile" "tactician_hero.lua"
+         "Function" "absolute_zero"
+         "Target" "POINT"
+      }
+      "CreateThinker"
+      {
+         "ModifierName" "modifier_t_absolute_zero_aura"
+         "Target" "POINT"
+      }
+      "FireSound"
+      {
+         "EffectName"   "Ability.FrostNova"
+         "Target"       "POINT"
+      }
+      "FireEffect"
+      {
+      	"EffectName"	"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+      	"EffectAttachType" "world_origin"
+      	"TargetPoint"		"POINT"
+
+      	"ControlPoints" 
+      	{
+      		"01"	"%radius 0 0"
+      		"03"	"0 0 0"
+      	}
+      }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_t_absolute_zero_aura"
+         {
+            "Passive"    "0"
+            "IsBuff"     "0"
+            "IsDebuff"   "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+            "Duration"   "%duration"
+            "Aura"       "modifier_absolute_zero"
+            "Aura_Radius" "%radius"
+            "Aura_Teams"  "DOTA_UNIT_TARGET_TEAM_BOTH"
+            "Aura_Types"  "DOTA_UNIT_TARGET_ALL"
+         }
+
+         "modifier_absolute_zero"
+         {
+           "EffectName" "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+           "EffectAttachType"   "follow_origin"
+            "States"
+            {
+           	   "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_COMMAND_RESTRICTED"    "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+     }   	
+   }
+
 
    "hero_gallop"
    {
 // General
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
+    "AbilityType"	   "DOTA_ABILITY_TYPE_BASIC"
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
     "AbilityTextureName"   "chaos_knight_phantasm"
     "MaxLevel"         "1"
@@ -998,7 +1112,6 @@
     {
       "particle"    "particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
       "soundfile"   "soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-
     }
 
     // Data Driven
@@ -1009,7 +1122,7 @@
        "FireSound"
        {
           "Target"   "CASTER"
-          "EffectName"  "Hero_TemplarAssassin.Meld"
+          "EffectName"  "Ability.Surge"
        }
 
        "ApplyModifier"
@@ -1030,15 +1143,8 @@
            "IsHidden"   "0"
 
 
-           "OnCreated"
-           {
-              "AttachEffect"
-               {
-                  "EffectName" "particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
-                  "EffectAttachType"   "follow_origin"
-                  "Target" "CASTER"
-               }            
-           }
+           "EffectName" "particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+           "EffectAttachType"   "follow_origin"
 
            "Properties"
            {
@@ -1090,13 +1196,14 @@
 
        // Stats
        //-------------------------------------------------------------------------------------
-       "AbilityCastPoint" "0.5"
-       "AbilityCooldown"  "0"
+       "AbilityCastPoint" "0.1"
+       "AbilityCooldown"  "1"
        "AbilityManaCost"  "0"
 
        "AbilitySpecial"
        {
        }
+
        "precache"
        {
        }

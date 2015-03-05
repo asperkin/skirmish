@@ -100,16 +100,6 @@ function spawnControlPoints()
    spawnPoint("Control_Point_Assassin", 0, -3328, 0)
 end
 
---hacky
-function levelUpGallop()
-   heroes = HeroList:GetAllHeroes()
-   for _, h in pairs(heroes) do
-      h:SetAbilityPoints(2)
-      h:UpgradeAbility(h:GetAbilityByIndex(3)) -- ability 5
-   end
-      
-end
-
 function spawnArmy() 
    -- spawn player units
    print("in spawnArmy().")
@@ -131,7 +121,7 @@ function CAddonTemplateGameMode:onHeroPick(event)
    --level up gallop
    local hero = EntIndexToHScript(event.heroindex)
    hero:SetAbilityPoints(2)
-   hero:UpgradeAbility(hero:GetAbilityByIndex(3))
+   hero:UpgradeAbility(hero:GetAbilityByIndex(4))
 end
 
 

@@ -14,7 +14,7 @@
       "Ability1" "t_regrowth"
       "Ability2" "t_immolate"
       "Ability3" "t_far_sight"
-      "Ability4" ""
+      "Ability4" "t_absolute_zero"
       "Ability5" "hero_gallop"
       "Ability6" ""
       "Ability10" ""
