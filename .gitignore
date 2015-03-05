@@ -2,3 +2,6 @@
 *.vpk
 #ignore swps
 *.swp
+#thumbnail cache is too big 
+tools_thumbnail_cache.bin
+
