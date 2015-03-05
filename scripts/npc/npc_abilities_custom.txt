@@ -202,7 +202,7 @@
        }
     }
 
-    "OnChannelFinish"
+    "OnChannelSucceeded"
     {
        "RunScript"
        {
@@ -916,7 +916,7 @@
     "precache"
     {
       "particle" "particles/items_fx/dust_of_appearance.vpcf"
-      "soundfile" "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+      "soundfile" "soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
     }
 
     // Data Driven
@@ -933,11 +933,6 @@
       {
          "ModifierName" "modifier_t_far_sight"
          "Target" "POINT"
-      }
-      "FireSound"
-      {
-         "EffectName"   "Hero_BountyHunter.Track.Cast"
-         "Target"       "POINT"
       }
 
     }
@@ -957,6 +952,16 @@
             "Aura_Radius" "%radius"
             "Aura_Teams"  "DOTA_UNIT_TARGET_TEAM_ENEMY"
             "Aura_Types"  "DOTA_UNIT_TARGET_ALL"
+
+            "OnCreated"
+            {
+              "FireSound"
+              {
+                 "EffectName"   "Hero_SkywrathMage.AncientSeal.Target"
+                 "Target"       "TARGET"
+              }              
+            }
+
          }
 
          "modifier_revealed"
@@ -1008,8 +1013,10 @@
     "precache"
     {
       "particle" "particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+      "particle" "particles/units/heroes/hero_ancient_apparition/ancient_ice_vortex.vpcf"
       "particle" "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
       "soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+      "soundfile" "soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
     }
 
     // Data Driven
@@ -1030,20 +1037,9 @@
       "FireSound"
       {
          "EffectName"   "Ability.FrostNova"
-         "Target"       "POINT"
+         "Target"       "CASTER"
       }
-      "FireEffect"
-      {
-      	"EffectName"	"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
-      	"EffectAttachType" "world_origin"
-      	"TargetPoint"		"POINT"
 
-      	"ControlPoints" 
-      	{
-      		"01"	"%radius 0 0"
-      		"03"	"0 0 0"
-      	}
-      }
 
     }
 
@@ -1062,17 +1058,50 @@
             "Aura_Radius" "%radius"
             "Aura_Teams"  "DOTA_UNIT_TARGET_TEAM_BOTH"
             "Aura_Types"  "DOTA_UNIT_TARGET_ALL"
+
+            "OnCreated"
+            {
+              "AttachEffect"
+              {
+                "EffectName"  "particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+                "EffectAttachType" "world_origin"
+                "Target"   "TARGET"
+
+                "ControlPoints" 
+                {
+                  "01"  "%radius 0 0"
+                  "03"  "0 0 0"
+                }
+              }
+              "FireSound"
+              {
+                 "EffectName"   "hero_Crystal.freezingField.wind"
+                 "Target"       "TARGET"
+              }              
+            }
          }
 
          "modifier_absolute_zero"
          {
            "EffectName" "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
            "EffectAttachType"   "follow_origin"
+
+
+
             "States"
             {
            	   "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
                "MODIFIER_STATE_COMMAND_RESTRICTED"    "MODIFIER_STATE_VALUE_ENABLED"
                "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "OnCreated"
+            {
+               "FireSound"
+               {
+                  "EffectName"   "hero_Crystal.frostbite" 
+                  "Target"       "TARGET"
+               }
             }
          }
      }   	
@@ -1104,14 +1133,14 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "speed_boost" "100"
+            "speed_boost" "110"
         }
     }
 
     "precache"
     {
       "particle"    "particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
-      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
     }
 
     // Data Driven
@@ -1122,7 +1151,7 @@
        "FireSound"
        {
           "Target"   "CASTER"
-          "EffectName"  "Ability.Surge"
+          "EffectName"  "Hero_ChaosKnight.RealityRift"
        }
 
        "ApplyModifier"
