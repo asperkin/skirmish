@@ -56,7 +56,8 @@ function capture_check(event)
                then
                   caster:SetControllableByPlayer(0, true)
                   goodguy_points = goodguy_points + 1
-                  print("goodguy_points=" .. goodguy_points)
+                  caster:EmitSound("Hero_Puck.Phase_Shift")
+
                   if prevTeam == DOTA_TEAM_BADGUYS 
                   then badguy_points = badguy_points - 1 end
                   if goodguy_points == num_points
@@ -67,7 +68,8 @@ function capture_check(event)
                then
                   caster:SetControllableByPlayer(5, true)
                   badguy_points = badguy_points + 1
-                  print("badguy_points=" .. badguy_points)
+                  caster:EmitSound("Hero_Bane.Enfeeble")
+
                   if prevTeam == DOTA_TEAM_GOODGUYS
                   then goodguy_points = goodguy_points - 1 end
                   if badguy_points == num_points

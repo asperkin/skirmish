@@ -1283,7 +1283,8 @@
 
     "precache"
     {
-
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
     }
 
     "Modifiers" 

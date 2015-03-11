@@ -52,24 +52,24 @@ function spawnUnits(player, unit_name, istep, ycoord, num)
       unit:SetControllableByPlayer(player, true)
    end
 end
+function spawnUnitsForBoth(player1, player2, unit_name, istep, ycoord, num)
+   spawnUnits(player1, unit_name, istep, ycoord, num)
+   spawnUnits(player2, unit_name, istep, -ycoord, num)
+end
 
 function spawnFootmen(num)
-    spawnUnits(0, "Forest_Footman", 80, 5500, num)
-    spawnUnits(5, "Forest_Footman", 80, -5500, num)
+   spawnUnitsForBoth(0, 5, "Forest_Footman", 80, 4150, num)
 end
 function spawnHeadhunters(num)
-    spawnUnits(0, "Gnoll_Headhunter", 80, 5600, num)
-    spawnUnits(5, "Gnoll_Headhunter", 80, -5600, num)
+   spawnUnitsForBoth(0, 5, "Gnoll_Headhunter", 80, 4250, num)
 end
 
 function spawnSiege(num)
-   spawnUnits(0, "Siege_Golem", 200, 5800, num)
-   spawnUnits(5, "Siege_Golem", 200, -5800, num)
+   spawnUnitsForBoth(0, 5, "Siege_Golem", 200, 4450, num)
 end   
 
 function spawnAssassin(num)
-   spawnUnits(0, "Ghost_Assassin", 270, 6000, num)
-   spawnUnits(5, "Ghost_Assassin", 270, -6000, num)
+   spawnUnitsForBoth(0, 5, "Ghost_Assassin", 270, 4650, num)
 end
 
 function spawnPoint(name, x, y, z)
