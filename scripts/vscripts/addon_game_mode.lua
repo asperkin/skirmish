@@ -29,14 +29,11 @@ function Activate()
 	GameRules.AddonTemplate = CAddonTemplateGameMode()
    GameRules.AddonTemplate:InitGameMode()
 
-	
-   GameRules:GetGameModeEntity():SetThink(spawnArmy, 2)
-   
 end
 
 
 -- generic unit spawning. istep needed for different unit widths
-function spawnUnits(player, unit_name, istep, ycoord, num)
+function spawnUnits(player, unit_name, istep, ycoord, num, hero)
    local imax = istep * (num - 1)
    local unit_team
    if player == 0 then
@@ -48,7 +45,7 @@ function spawnUnits(player, unit_name, istep, ycoord, num)
    for i = 0, imax, istep do
       local point = Vector(-(imax/2) + i, ycoord, 0) -- centered
       
-      local unit = CreateUnitByName(unit_name, point, true, nil, nil, unit_team)
+      local unit = CreateUnitByName(unit_name, point, true, nil, hero, unit_team)
       unit:SetControllableByPlayer(player, true)
    end
 end
@@ -57,19 +54,19 @@ function spawnUnitsForBoth(player1, player2, unit_name, istep, ycoord, num)
    spawnUnits(player2, unit_name, istep, -ycoord, num)
 end
 
-function spawnFootmen(num)
-   spawnUnitsForBoth(0, 5, "Forest_Footman", 80, 4150, num)
+function spawnFootmen(num, player, hero)
+   spawnUnits(player, "Forest_Footman", 80, 4150, num, hero)
 end
-function spawnHeadhunters(num)
-   spawnUnitsForBoth(0, 5, "Gnoll_Headhunter", 80, 4250, num)
+function spawnHeadhunters(num, player, hero)
+   spawnUnits(player,  "Gnoll_Headhunter", 80, 4250, num, hero)
 end
 
-function spawnSiege(num)
-   spawnUnitsForBoth(0, 5, "Siege_Golem", 200, 4450, num)
+function spawnSiege(num, player, hero)
+   spawnUnits(player, "Siege_Golem", 200, 4450, num, hero)
 end   
 
-function spawnAssassin(num)
-   spawnUnitsForBoth(0, 5, "Ghost_Assassin", 270, 4650, num)
+function spawnAssassin(num, player, hero)
+   spawnUnits(player, "Ghost_Assassin", 270, 4650, num, hero)
 end
 
 function spawnPoint(name, x, y, z)
@@ -77,6 +74,7 @@ function spawnPoint(name, x, y, z)
    CreateUnitByName("invisible_man", Vector(x,y,z), true, nil, nil, DOTA_TEAM_GOODGUYS)
    CreateUnitByName("invisible_man", Vector(x,y,z), true, nil, nil, DOTA_TEAM_BADGUYS)
 end
+
 function spawnControlPoints()
    --gross code goes here. spawn the sightgivers here too
    spawnPoint("Control_Point_Footman", 2304, 4096, 0)
@@ -100,15 +98,14 @@ function spawnControlPoints()
    spawnPoint("Control_Point_Assassin", 0, -3328, 0)
 end
 
-function spawnArmy() 
+function spawnArmy(player, hero) 
    -- spawn player units
    print("in spawnArmy().")
 
-   spawnHeadhunters(6)
-   spawnFootmen(6)
-   spawnSiege(2)
-   spawnAssassin(1)
-   spawnControlPoints()
+   spawnHeadhunters(6, player, hero)
+   spawnFootmen(6, player, hero)
+   spawnSiege(2, player, hero)
+   spawnAssassin(1, player, hero)
 
 
    -- dont run again
@@ -122,12 +119,16 @@ function CAddonTemplateGameMode:onHeroPick(event)
    local hero = EntIndexToHScript(event.heroindex)
    hero:SetAbilityPoints(2)
    hero:UpgradeAbility(hero:GetAbilityByIndex(4))
+
+   spawnArmy(hero:GetPlayerID(), hero)
 end
 
 
 function CAddonTemplateGameMode:InitGameMode()
 	print( "Template addon is loaded." )
    ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(CAddonTemplateGameMode, 'onHeroPick'), self)
+
+   spawnControlPoints()
 
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 end

@@ -1,3 +1,5 @@
+require('util')
+
 --Some planning and advice from Noya
 local num_points = 14
 local goodguy_points = 0
@@ -55,6 +57,7 @@ function capture_check(event)
                if cappingTeam == DOTA_TEAM_GOODGUYS
                then
                   caster:SetControllableByPlayer(0, true)
+                  caster:SetOwner(getHeroForTeam(DOTA_TEAM_GOODGUYS))
                   goodguy_points = goodguy_points + 1
                   caster:EmitSound("Hero_Puck.Phase_Shift")
 
@@ -67,6 +70,7 @@ function capture_check(event)
                elseif cappingTeam == DOTA_TEAM_BADGUYS
                then
                   caster:SetControllableByPlayer(5, true)
+                  caster:SetOwner(getHeroForTeam(DOTA_TEAM_BADGUYS))
                   badguy_points = badguy_points + 1
                   caster:EmitSound("Hero_Bane.Enfeeble")
 
@@ -111,7 +115,8 @@ function capture_check(event)
          caster:SetMana(0)
          if caster:GetTeam() ~= DOTA_TEAM_NEUTRALS 
          then
-            local unit = CreateUnitByName(event.unit_name, caster:GetAbsOrigin(), true, nil, nil, caster:GetTeam())
+            local unit = CreateUnitByName(event.unit_name, caster:GetAbsOrigin(), true, nil, caster:GetOwner(), caster:GetTeam())
+
             if caster:GetTeam() == DOTA_TEAM_GOODGUYS
             then
                unit:SetControllableByPlayer(0, true)
