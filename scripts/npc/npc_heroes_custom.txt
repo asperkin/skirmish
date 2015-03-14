@@ -3,7 +3,7 @@
 // the specified key-value combinations.  Use override_hero <hero_to_override> for this.
 "DOTAHeroes"
 {
-   "npc_hero_tactician"
+   "npc_hero_archmage"
    {
       // General
       //----------------------------------------------------------------
@@ -14,6 +14,75 @@
       "Ability1" "t_regrowth"
       "Ability2" "t_immolate"
       "Ability3" "t_far_sight"
+      "Ability4" "t_absolute_zero"
+      "Ability5" "hero_gallop"
+      "Ability6" ""
+      "Ability10" ""
+      // Armor
+      //----------------------------------------------------------------
+      "ArmorPhysical" "0"
+      "MagicalResistance" "0"
+      // Attack
+      //----------------------------------------------------------------
+      "AttackCapabilities" "DOTA_UNIT_CAP_RANGED_ATTACK"
+      "AttackDamageMin" "5.0"
+      "AttackDamageMax" "5.0"
+      "AttackDamageType" "DAMAGE_TYPE_PHYSICAL"
+      "AttackRate" "2.13"
+      "AttackAnimationPoint" "0.55"
+      "AttackAcquisitionRange" "600"
+      "AttackRange" "600"
+      //"ProjectileModel" "" //Add projectile
+      "ProjectileSpeed" "900"
+      // Attributes
+      //----------------------------------------------------------------
+      "AttributePrimary" "DOTA_ATTRIBUTE_INTELLECT"
+      "AttributeBaseStrength" "15"
+      "AttributeStrengthGain" "1.8"
+      "AttributeBaseIntelligence" "19"
+      "AttributeIntelligenceGain" "3.2"
+      "AttributeBaseAgility" "17"
+      "AttributeAgilityGain" "1"
+      // Bounty
+      //----------------------------------------------------------------
+      "BountyGoldMin" "0"
+      "BountyGoldMax" "0"
+      // Movement
+      //----------------------------------------------------------------
+      "MovementCapabilities" "DOTA_UNIT_CAP_MOVE_GROUND"
+      "MovementSpeed" "270"
+      "MovementTurnRate" "0.5"
+      // Status
+      //----------------------------------------------------------------
+      "StatusHealth" "110"
+      "StatusHealthRegen" "1"
+      "StatusMana" "0"
+      "StatsManaRegen" "0.02"
+      // Vision
+      //----------------------------------------------------------------
+      "VisionDaytimeRange" "1800"
+      "VisionNighttimeRange" "1200"
+      // Team
+      //----------------------------------------------------------------
+      "TeamName" "DOTA_TEAM_NEUTRALS"
+      "CombatClassAttack" "DOTA_COMBAT_CLASS_ATTACK_HERO"
+      "CombatClassDefend" "DOTA_COMBAT_CLASS_DEFEND_HERO"
+      "UnitRelationShipClass" "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+      // Creature Data
+      //----------------------------------------------------------------
+   }
+
+   "npc_hero_death_knight"
+   {
+      // General
+      //----------------------------------------------------------------
+      "override_hero" "npc_dota_hero_abaddon"
+      // Abilities
+      //----------------------------------------------------------------
+      "AbilityLayout" "5"
+      "Ability1" "t_regrowth"
+      "Ability2" "t_immolate"
+      "Ability3" "t_sentry_ward"
       "Ability4" "t_absolute_zero"
       "Ability5" "hero_gallop"
       "Ability6" ""

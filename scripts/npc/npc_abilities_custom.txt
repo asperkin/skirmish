@@ -690,7 +690,7 @@
     //-------------------------------------------------------------------------------------
     "AbilityCastRange" "600"
     "AbilityCastPoint" "0.1"
-    "AbilityCooldown"  "15 12 9"
+    "AbilityCooldown"  "15 11 7"
     "AbilityManaCost"  "30 34 38"
     "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
     "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC"
@@ -1107,6 +1107,113 @@
      }   	
    }
 
+   "t_sentry_ward"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityTextureName"   "drow_ranger_trueshot"
+    "MaxLevel"         "3"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.5 0.5 0.5"
+    "AbilityCooldown"  "25"
+    "AbilityManaCost"  "50 55 60"
+    "AbilityCastRange" "700"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "radius" "600 1200 1800"
+        }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "30 60 100"
+        }
+    }
+
+    "precache"
+    {
+      "particle"    "particles/status_fx/status_effect_frost_lich.vpcf"
+      "soundfile" "soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+      "SpawnUnit"
+      {
+        "UnitName"    "sentry_ward"
+        "Target" "POINT"
+        "Duration" "%duration"
+        "OnSpawn"
+        {
+          "ApplyModifier"
+          {
+            "ModifierName" "modifier_t_sentry_ward"
+            "Target" "TARGET"
+            "Duration" "%duration"
+          }
+        }
+      }
+    }
+
+    "Modifiers"
+    {
+        "modifier_t_sentry_ward"
+         {
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsDebuff"   "0"
+            "IsPurgable" "0"
+            "IsHidden"   "1"
+
+            "StatusEffectName" "particles/status_fx/status_effect_frost_lich.vpcf"
+            "StatusEffectPriority" "10"
+            "Duration"   "%duration"
+            "Aura"       "modifier_revealed"
+            "Aura_Radius" "%radius"
+            "Aura_Teams"  "DOTA_UNIT_TARGET_TEAM_ENEMY"
+            "Aura_Types"  "DOTA_UNIT_TARGET_ALL"
+
+            "States"
+            {
+              "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+            "Properties"
+            {
+              "MODIFIER_PROPERTY_BONUS_DAY_VISION" "%radius"
+              "MODIFIER_PROPERTY_BONUS_NIGHT_VISION" "%radius"
+            }
+
+            "OnCreated"
+            {
+              "FireSound"
+              {
+                 "EffectName"   "Hero_FacelessVoid.TimeWalk"
+                 "Target"       "TARGET"
+              }              
+            }
+
+         }
+
+         "modifier_revealed"
+         {
+            "States"
+            {
+               "MODIFIER_STATE_INVISIBLE"    "MODIFIER_STATE_VALUE_DISABLED"
+            }
+         }
+     }    
+   }
 
    "hero_gallop"
    {
@@ -1125,6 +1232,7 @@
     "AbilityManaCost"  "10"
     "AbilityChannelTime" "3"
     "AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_1"
+    "AnimationPlaybackRate" "0.33"
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -1229,28 +1337,16 @@
        "AbilityCooldown"  "1"
        "AbilityManaCost"  "0"
 
-       "AbilitySpecial"
-       {
-       }
-
-       "precache"
-       {
-       }
-
        // Data Driven
        //-------------------------------------------------------------------------------------
        "OnSpellStart"
        {
          "RunScript"
          {
-            "ScriptFile" "control_point.lua"
-            "Function"  "set_rally"
             "Target"    "POINT"
+            "ScriptFile" "rally.lua"
+            "Function"  "set_rally"
          }
-       }
-
-       "Modifiers"
-       {
        }
    } // end of CP_Rally
 
@@ -1285,6 +1381,8 @@
     {
       "soundfile"   "soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
       "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+      "particle"    "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+      "particle"    "particles/econ/items/abaddon/abaddon_alliance/abaddon_death_coil_alliance.vpcf"
     }
 
     "Modifiers" 
@@ -1361,6 +1459,10 @@
     "precache"
     {
 
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+      "particle"    "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+      "particle"    "particles/econ/items/abaddon/abaddon_alliance/abaddon_death_coil_alliance.vpcf"
     }
 
     "Modifiers" 
@@ -1437,7 +1539,10 @@
 
     "precache"
     {
-
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+      "particle"    "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+      "particle"    "particles/econ/items/abaddon/abaddon_alliance/abaddon_death_coil_alliance.vpcf"
     }
 
     "Modifiers" 
@@ -1512,7 +1617,10 @@
 
     "precache"
     {
-
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+      "particle"    "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+      "particle"    "particles/econ/items/abaddon/abaddon_alliance/abaddon_death_coil_alliance.vpcf"
     }
 
     "Modifiers" 
