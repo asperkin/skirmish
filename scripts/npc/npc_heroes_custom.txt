@@ -55,7 +55,7 @@
       // Status
       //----------------------------------------------------------------
       "StatusHealth" "110"
-      "StatusHealthRegen" "1"
+      "StatusHealthRegen" "1.5"
       "StatusMana" "0"
       "StatsManaRegen" "0.02"
       // Vision
@@ -124,7 +124,7 @@
       // Status
       //----------------------------------------------------------------
       "StatusHealth" "110"
-      "StatusHealthRegen" "1"
+      "StatusHealthRegen" "1.5"
       "StatusMana" "0"
       "StatsManaRegen" "0.02"
       // Vision

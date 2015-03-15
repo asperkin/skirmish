@@ -693,10 +693,10 @@
     //-------------------------------------------------------------------------------------
     "AbilityCastRange" "600"
     "AbilityCastPoint" "0.1"
-    "AbilityCooldown"  "13 10 7"
-    "AbilityManaCost"  "30 34 38"
+    "AbilityCooldown"  "13 9 5"
+    "AbilityManaCost"  "30 20 10"
     "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC"
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -990,8 +990,8 @@
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.1"
-    "AbilityCastRange"				"650"
-    "AbilityCastPoint"				"0.3"
+    "AbilityCastRange"				"900"
+    "AbilityCastPoint"				"0.1"
     "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
     "AbilityCooldown"  "70"
     "AbilityManaCost"  "65"
@@ -1124,7 +1124,7 @@
     "AbilityCastPoint" "0.5 0.5 0.5"
     "AbilityCooldown"  "25 23 20"
     "AbilityManaCost"  "50 55 60"
-    "AbilityCastRange" "700"
+    "AbilityCastRange" "750"
 
     // Special
     //-------------------------------------------------------------------------------------

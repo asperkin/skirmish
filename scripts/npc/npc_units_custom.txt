@@ -709,7 +709,7 @@
 		//----------------------------------------------------------------
 		"StatusHealth"				"101"		// Base health.
 		"StatusHealthRegen"		"0"		// Health regeneration rate.
-		"StatusMana"				"105"		// UNIT SPAWN INTERVAL 
+		"StatusMana"				"110"		// UNIT SPAWN INTERVAL 
 		"StatusManaRegen"			"0"		// Mana regeneration rate.		 
 		
 		// Vision

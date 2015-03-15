@@ -16,7 +16,9 @@ function Precache( context )
    PrecacheUnitByNameSync("Forest_Footman", context)
    PrecacheUnitByNameSync("Siege_Golem", context)
    PrecacheUnitByNameSync("Ghost_Assassin", context)
-   PrecacheUnitByNameSync("npc_hero_tactician", context)
+   PrecacheUnitByNameSync("npc_hero_archmage", context)
+   PrecacheUnitByNameSync("npc_hero_death_knight", context)
+   PrecacheUnitByNameSync("sentry_ward", context)
 
    PrecacheUnitByNameSync("Control_Point_Footman", context)
    PrecacheUnitByNameSync("Control_Point_Headhunter", context)
@@ -132,6 +134,7 @@ function CAddonTemplateGameMode:InitGameMode()
    ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(CAddonTemplateGameMode, 'onHeroPick'), self)
 
    spawnControlPoints()
+   GameRules:SetSameHeroSelectionEnabled(true)
 
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 end
