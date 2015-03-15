@@ -1244,7 +1244,7 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "speed_boost" "110"
+            "speed_boost" "120"
         }
     }
 
