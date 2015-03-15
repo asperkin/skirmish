@@ -591,7 +591,7 @@
     "AbilityCastPoint" "0.5"
     "AbilityCooldown"  "10"
     "AbilityManaCost"  "0"
-    "AbilityChannelTime" "3"
+    "AbilityChannelTime" "2.5"
     "AbilityCastAnimation" "ACT_DOTA_FLAIL"
     "AnimationPlaybackRate" "0.2"
 
