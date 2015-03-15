@@ -201,6 +201,14 @@
           "ModifierName"   "mod_cmd_restricted"
        }
     }
+    "OnChannelFinish"
+    {
+       "RemoveModifier"
+       {
+          "Target"   "CASTER"
+          "ModifierName"   "mod_cmd_restricted"
+       }
+    }
 
     "OnChannelSucceeded"
     {
@@ -213,11 +221,6 @@
        {
           "Target"   "CASTER"
           "ModifierName"   "mod_war_stance"
-       }
-       "RemoveModifier"
-       {
-          "Target"   "CASTER"
-          "ModifierName"   "mod_cmd_restricted"
        }
     }
     "Modifiers"
@@ -690,10 +693,10 @@
     //-------------------------------------------------------------------------------------
     "AbilityCastRange" "600"
     "AbilityCastPoint" "0.1"
-    "AbilityCooldown"  "15 11 7"
+    "AbilityCooldown"  "13 10 7"
     "AbilityManaCost"  "30 34 38"
     "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -1025,7 +1028,7 @@
     {
       "RunScript"
       {
-         "ScriptFile" "tactician_hero.lua"
+         "ScriptFile" "absolute_zero.lua"
          "Function" "absolute_zero"
          "Target" "POINT"
       }
@@ -1119,7 +1122,7 @@
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.5 0.5 0.5"
-    "AbilityCooldown"  "25"
+    "AbilityCooldown"  "25 23 20"
     "AbilityManaCost"  "50 55 60"
     "AbilityCastRange" "700"
 
@@ -1130,12 +1133,12 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "radius" "600 1200 1800"
+            "radius" "700 1300 1800"
         }
         "02"
         {
             "var_type" "FIELD_INTEGER"
-            "duration" "30 60 100"
+            "duration" "60 120 240"
         }
     }
 
@@ -1328,12 +1331,12 @@
    // General
        //-------------------------------------------------------------------------------------
        "BaseClass"        "ability_datadriven" 
-       "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_POINT"
+       "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
        "AbilityTextureName"   "kunkka_x_marks_the_spot"
 
        // Stats
        //-------------------------------------------------------------------------------------
-       "AbilityCastPoint" "0.1"
+       "AbilityCastPoint" "0.5"
        "AbilityCooldown"  "1"
        "AbilityManaCost"  "0"
 
@@ -1399,6 +1402,7 @@
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
           }
 
           "OnCreated"
@@ -1475,11 +1479,11 @@
 
           States
           {
-             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
           }
 
           "OnCreated"
@@ -1554,12 +1558,12 @@
           "IsPurgable" "0"
 
           States
-          {
-             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+          {             
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
           }
 
           "OnCreated"
@@ -1633,11 +1637,11 @@
 
           States
           {
-             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+             "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
           }
 
           "OnCreated"

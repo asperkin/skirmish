@@ -374,8 +374,8 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"RingRadius"				"90"
-		"HealthBarOffset"			"30"
+		"RingRadius"				"30"
+		"HealthBarOffset"			"130"
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -524,6 +524,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 		"AttackDamageMin"			"0"		// Damage range min.
 		"AttackDamageMax"			"0"		// Damage range max.
+      "AttackAnimationPoint"  "0"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -543,7 +544,7 @@
 
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"				"0"		// Speed.			
 
 		// Status
@@ -563,20 +564,20 @@
 		"TeamName"					"DOTA_TEAM_NEUTRALS"						// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 
 		// Creature Data
 		//----------------------------------------------------------------
 		"Creature"
 		{
 			//Level Up
-			"HPGain"					"50"
-			"DamageGain"				"2"
-			"ArmorGain"					"0.25"
-			"MagicResistGain"			"0.1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"3"
-			"XPGain"					"15"
+			"HPGain"					"0"
+			"DamageGain"				"0"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 		}
 	}
 
@@ -590,7 +591,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"CP_Headhunter"			// Ability 1
-		"Ability2"					""			// Ability 2
+		"Ability2"					"CP_Rally"			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4
 
@@ -638,7 +639,7 @@
 		"TeamName"					"DOTA_TEAM_NEUTRALS"						// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 
 		// Creature Data
 		//----------------------------------------------------------------
@@ -665,7 +666,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"CP_Golem"			// Ability 1
-		"Ability2"					""			// Ability 2
+		"Ability2"					"CP_Rally"			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4
 
@@ -713,7 +714,7 @@
 		"TeamName"					"DOTA_TEAM_NEUTRALS"						// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 
 		// Creature Data
 		//----------------------------------------------------------------
@@ -740,7 +741,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"CP_Assassin"			// Ability 1
-		"Ability2"					""			// Ability 2
+		"Ability2"					"CP_Rally"			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4
 
@@ -788,7 +789,7 @@
 		"TeamName"					"DOTA_TEAM_NEUTRALS"						// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 
 		// Creature Data
 		//----------------------------------------------------------------

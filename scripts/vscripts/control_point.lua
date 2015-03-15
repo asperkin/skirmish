@@ -141,7 +141,7 @@ function capture_check(event)
             if caster.rally ~= nil
             then
                print("moving")
-               unit:MoveToPosition(caster.rally)
+               GameRules:GetGameModeEntity():SetThink(function() unit:MoveToPosition(caster.rally) return nil end, DoUniqueString("rally_move"), 0.06)
             end
          end
       end
