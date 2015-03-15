@@ -521,10 +521,12 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"0"		// Damage range min.
 		"AttackDamageMax"			"0"		// Damage range max.
       "AttackAnimationPoint"  "0"
+		"AttackRate"				"1"		// Speed of attack.
+      "AttackRange"           "100"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -597,9 +599,12 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"0"		// Damage range min.
 		"AttackDamageMax"			"0"		// Damage range max.
+      "AttackAnimationPoint"  "0"
+		"AttackRate"				"1"		// Speed of attack.
+      "AttackRange"           "100"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -672,9 +677,12 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"0"		// Damage range min.
 		"AttackDamageMax"			"0"		// Damage range max.
+      "AttackAnimationPoint"  "0"
+		"AttackRate"				"1"		// Speed of attack.
+      "AttackRange"           "100"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -747,9 +755,12 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"0"		// Damage range min.
 		"AttackDamageMax"			"0"		// Damage range max.
+      "AttackAnimationPoint"  "0"
+		"AttackRate"				"1"		// Speed of attack.
+      "AttackRange"           "100"
 
 		// Armor
 		//----------------------------------------------------------------
