@@ -5,6 +5,42 @@ local num_points = 14
 local goodguy_points = 0
 local badguy_points = 0
 
+function GetSpawningUnitName(caster, hero)
+   local unit_name = ""
+   if hero:GetUnitName() == "npc_dota_hero_keeper_of_the_light"
+   then
+      if caster:GetUnitName() == "Control_Point_Footman"
+      then
+         unit_name = "Forest_Footman"
+      elseif caster:GetUnitName() == "Control_Point_Headhunter"
+      then
+         unit_name = "Gnoll_Headhunter"
+      elseif caster:GetUnitName() == "Control_Point_Golem"
+      then
+         unit_name = "Siege_Golem"
+      elseif caster:GetUnitName() == "Control_Point_Assassin"
+      then
+         unit_name = "Ghost_Assassin"
+      end
+   elseif hero:GetUnitName() == "npc_dota_hero_abaddon"
+   then
+      if caster:GetUnitName() == "Control_Point_Footman"
+      then
+         unit_name = "Blight_Footman"
+      elseif caster:GetUnitName() == "Control_Point_Headhunter"
+      then
+         unit_name = "Gnoll_Headhunter"
+      elseif caster:GetUnitName() == "Control_Point_Golem"
+      then
+         unit_name = "Siege_Golem"
+      elseif caster:GetUnitName() == "Control_Point_Assassin"
+      then
+         unit_name = "Ghost_Assassin"
+      end
+   end
+
+   return unit_name
+end
 
 --remove from the table units that arent allowed to cap
 function FilterUnits(units)
@@ -134,7 +170,8 @@ function capture_check(event)
          if caster:GetTeam() ~= DOTA_TEAM_NEUTRALS 
          then
             local hero = getHeroForTeam(caster:GetTeam())
-            local unit = CreateUnitByName(event.unit_name, caster:GetAbsOrigin(), true, nil, caster:GetOwner(), caster:GetTeam())
+            local unit_name = GetSpawningUnitName(caster, hero)
+            local unit = CreateUnitByName(unit_name, caster:GetAbsOrigin(), true, nil, caster:GetOwner(), caster:GetTeam())
 
             unit:SetControllableByPlayer(hero:GetPlayerID(), true)
 

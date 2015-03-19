@@ -264,7 +264,12 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "damage_bonus" "110"
+            "damage_bonus" "200"
+        }
+        "02"
+        {
+          "var_type" "FIELD_INTEGER"
+          "pct_damage_reduced" "20"
         }
     }
 
@@ -345,6 +350,10 @@
             {
                "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
             }
+            "Properties"
+            {
+              "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%pct_damage_reduced"
+            }
 
             "OnAttackLanded"
             {
@@ -412,19 +421,95 @@
     }
    }
    
+   "Rush"
+   {
+    "BaseClass" "ability_datadriven"
+    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityTextureName" "centaur_hoof_stomp"
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0"
+    "AbilityCooldown"  "30"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "speed_boost" "30"
+        }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "5"
+        }
+    }
+
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+        "particle"  "particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "modifier_rush"
+          "Duration"     "%duration"
+       }
+       "FireSound"
+       {
+          "EffectName"     "Ability.Windrun"
+          "Target"         "CASTER"
+       }
+    }
+
+    "Modifiers"
+    {
+        "modifier_rush"
+        {
+           "OnCreated"
+           {
+            "AttachEffect"
+            {
+              "EffectName"        "particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+              "EffectAttachType"  "follow_origin"
+              "Target"            "TARGET"
+            }
+           }
+
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_boost"
+            }
+        }
+    }
+   }
 
    "Berserk"
    {
 // General
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
-    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
     "AbilityTextureName"   "ogre_magi_bloodlust"
 
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0"
-    "AbilityCooldown"  "7"
+    "AbilityCooldown"  "20"
     "AbilityManaCost"  "0"
 
     // Special
@@ -441,6 +526,11 @@
             "var_type" "FIELD_INTEGER"
             "damage_taken" "50"
         }
+        "03"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "10"
+        }
     }
 
     "precache"
@@ -450,25 +540,18 @@
 
     // Data Driven
     //-------------------------------------------------------------------------------------
-    "OnToggleOn"
+    "OnSpellStart"
     {
        "ApplyModifier"
        {
           "Target" "CASTER"
           "ModifierName" "modifier_berserk"
+          "Duration"     "%duration"
        }
        "FireSound"
        {
           "EffectName"     "Hero_Lycan.SummonWolves"
           "Target"         "CASTER"
-       }
-    }
-    "OnToggleOff"
-    {
-       "RemoveModifier"
-       {
-          "Target" "CASTER"
-          "ModifierName" "modifier_berserk"
        }
     }
 
@@ -1426,7 +1509,7 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_name"     "Forest_Footman"
+                "unit_name"     "footman"
                 "radius"        "%radius"
              }
           }
@@ -1508,7 +1591,7 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_name"     "Gnoll_Headhunter"
+                "unit_name"     "headhunter"
                 "radius"        "%radius"
              }
           }
@@ -1588,7 +1671,7 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_name"     "Siege_Golem"
+                "unit_name"     "golem"
                 "radius"        "%radius"
              }
           }
@@ -1667,7 +1750,7 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_name"     "Ghost_Assassin"
+                "unit_name"     "ghost"
                 "radius"        "%radius"
              }
           }
