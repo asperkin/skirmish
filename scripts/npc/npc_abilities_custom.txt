@@ -498,12 +498,93 @@
     }
    }
 
+   "Rend_Earth"
+   {
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityTextureName"   "earthshaker_fissure"
+    "AoERadius"    "100"
+    "AbilityCastRange" "600"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0"
+    "AbilityCooldown"  "60"
+    "AbilityManaCost"  "0"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "duration" "8"
+        }
+    }
+
+    "precache"
+    {
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+       "SpawnUnit"
+       {
+         "UnitName"    "rock"
+         "Target"     "POINT"
+         "Duration"    "%duration"
+         "UnitCount"    "1"
+         "UnitLimit"    "0"
+         "GrantsGold"  "0"
+         "GrantsXP"    "0"
+         "SpawnRadius"  "10"
+         "OnSpawn"
+         {
+           "ApplyModifier"
+           {
+             "ModifierName"  "modifier_rock"
+             "Target"    "TARGET"
+           }
+         }
+       }
+       "FireSound"
+       {
+          "EffectName"     "Hero_Earthshaker.Fissure"
+          "Target"         "CASTER"
+       }
+    }
+
+    "Modifiers"
+    {
+        "modifier_rock"
+        {
+           "OnCreated"
+           {
+           }
+
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "1"
+
+            "States"
+            {
+               "MODIFIER_STATE_LOW_ATTACK_PRIORITY" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
+   }
+
    "Berserk"
    {
 // General
     //-------------------------------------------------------------------------------------
     "BaseClass"        "ability_datadriven" 
-    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
     "AbilityTextureName"   "ogre_magi_bloodlust"
 
     // Stats
@@ -1177,8 +1258,8 @@
             "States"
             {
            	   "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
-               "MODIFIER_STATE_COMMAND_RESTRICTED"    "MODIFIER_STATE_VALUE_ENABLED"
                "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
             }
 
             "OnCreated"
@@ -1316,9 +1397,9 @@
     "AbilityCastPoint" "0.1"
     "AbilityCooldown"  "20"
     "AbilityManaCost"  "10"
-    "AbilityChannelTime" "3"
+    "AbilityChannelTime" "1.5"
     "AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_1"
-    "AnimationPlaybackRate" "0.33"
+    "AnimationPlaybackRate" "0.5"
 
     // Special
     //-------------------------------------------------------------------------------------

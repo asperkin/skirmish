@@ -12,6 +12,7 @@ function Precache( context )
 			PrecacheResource( "particle", "*.vpcf", context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
+   PrecacheUnitByNameSync("Troll_Headhunter", context)
    PrecacheUnitByNameSync("Gnoll_Headhunter", context)
    PrecacheUnitByNameSync("Forest_Footman", context)
    PrecacheUnitByNameSync("Blight_Footman", context)
@@ -60,7 +61,7 @@ end
 function spawnHeadhunters(num, player, hero)
    local y = 4250
    if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4250 end
-   spawnUnits(player,  "Gnoll_Headhunter", 80, y, num, hero)
+   spawnUnits(player, hero.headhunter_name, 80, y, num, hero)
 end
 
 function spawnSiege(num, player, hero)
@@ -111,9 +112,11 @@ function spawnArmy(player, hero)
    if hero:GetUnitName() == "npc_dota_hero_keeper_of_the_light"
    then
       hero.footman_name = "Forest_Footman"
+      hero.headhunter_name = "Troll_Headhunter"
    elseif hero:GetUnitName() == "npc_dota_hero_abaddon"
    then
       hero.footman_name = "Blight_Footman"
+      hero.headhunter_name = "Gnoll_Headhunter"
    end
    print("heroname = " .. hero:GetUnitName())
 
