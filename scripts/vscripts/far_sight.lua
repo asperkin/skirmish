@@ -14,13 +14,10 @@ function far_sight(event)
          ParticleManager:SetParticleControl( fxIndex, 0, event.target_points[1] )
          ParticleManager:SetParticleControl( fxIndex, 1, Vector(radius, 0, radius) )
    end
-
-   event.ability:CreateVisibilityNode(event.target_points[1], radius, duration)
-
 end
 
-function kill_seer(event)
-   print("killin")
-   event.caster:Kill()
+function set_vision(event)
+   event.target:SetDayTimeVisionRange(event.radius)
+   event.target:SetNightTimeVisionRange(event.radius)
 end
 

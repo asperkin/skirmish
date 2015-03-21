@@ -14,11 +14,11 @@ function GetSpawningUnitName(caster, hero)
          unit_name = "Forest_Footman"
       elseif caster:GetUnitName() == "Control_Point_Headhunter"
       then
-         unit_name = "Gnoll_Headhunter"
+         unit_name = "Troll_Headhunter"
       elseif caster:GetUnitName() == "Control_Point_Golem"
       then
          unit_name = "Siege_Golem"
-      elseif caster:GetUnitName() == "Control_Point_Assassin"
+      elseif caster:GetUnitName() == "Control_Point_Ghost"
       then
          unit_name = "Ghost_Assassin"
       end
@@ -33,7 +33,7 @@ function GetSpawningUnitName(caster, hero)
       elseif caster:GetUnitName() == "Control_Point_Golem"
       then
          unit_name = "Siege_Golem"
-      elseif caster:GetUnitName() == "Control_Point_Assassin"
+      elseif caster:GetUnitName() == "Control_Point_Ghost"
       then
          unit_name = "Ghost_Assassin"
       end

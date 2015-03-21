@@ -13,6 +13,9 @@
 
     // Stats
     //-------------------------------------------------------------------------------------
+    "AbilityCastRange"        "1300"
+    "AbilityCastPoint"        "0.3"
+    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_1"
     "AbilityCastPoint" "0.5"
     "AbilityCooldown"  "5"
     "AbilityManaCost"  "0"
@@ -280,7 +283,7 @@
 
         "particle" "particles/units/heroes/hero_juggernaut/jugg_attack_blur.vpcf"
         "particle" "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
-        "soundfile" "soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
     }
 
     // Data Driven
@@ -353,13 +356,14 @@
             "Properties"
             {
               "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%pct_damage_reduced"
+              "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
             }
 
             "OnAttackLanded"
             {
                "FireSound"
                {
-                  "EffectName"   "Hero_SkeletonKing.CriticalStrike"
+                  "EffectName"   "Hero_Axe.CounterHelix"
                   "Target"       "CASTER"
                }
                "FireEffect"
@@ -373,13 +377,6 @@
                   "EffectName" "particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
                   "EffectAttachType" "attach_hitloc"
                   "Target" "TARGET"
-               }
-
-               "Damage"
-               {
-                  "Target"    "TARGET"
-                  "Type"      "DAMAGE_TYPE_PHYSICAL"
-                  "Damage"    "%damage_bonus"
                }
 
                "RemoveModifier"
@@ -498,18 +495,18 @@
     }
    }
 
-   "Rend_Earth"
+   "Stone_Wall"
    {
     "BaseClass"        "ability_datadriven" 
     "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
     "AbilityTextureName"   "earthshaker_fissure"
-    "AoERadius"    "100"
+    "AoERadius"    "%hull_size"
     "AbilityCastRange" "600"
 
     // Stats
     //-------------------------------------------------------------------------------------
-    "AbilityCastPoint" "0"
-    "AbilityCooldown"  "60"
+    "AbilityCastPoint" "0.1"
+    "AbilityCooldown"  "70"
     "AbilityManaCost"  "0"
 
     // Special
@@ -519,17 +516,35 @@
         "01"
         {
             "var_type" "FIELD_INTEGER"
-            "duration" "8"
+            "duration" "12"
+        }
+        "02"
+        {
+          "var_type" "FIELD_INTEGER"
+          "hull_size" "60"
         }
     }
 
     "precache"
     {
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+        "particle" "particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
+        "particle" "particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_egset.vpcf"
+        "particle" "particles/units/heroes/hero_earth_spirit/espirit_spawn.vpcf"
     }
 
     // Data Driven
     //-------------------------------------------------------------------------------------
+    "OnAbilityPhaseStart"
+    {
+      "RunScript"
+      {
+        "ScriptFile"  "util.lua"
+        "Function"    "CannotCastOnUnits"
+        "Target" "POINT"
+        "hull_size" "%hull_size"
+      }
+    }
     "OnSpellStart"
     {
        "SpawnUnit"
@@ -544,11 +559,28 @@
          "SpawnRadius"  "10"
          "OnSpawn"
          {
+           "RunScript"
+           {
+             "ScriptFile"  "util.lua"
+             "Function"    "SetTargetHullSize"
+             "hull_size"      "%hull_size"
+           }
            "ApplyModifier"
            {
              "ModifierName"  "modifier_rock"
              "Target"    "TARGET"
            }
+           "AttachEffect"
+           {
+             "EffectName"        "particles/units/heroes/hero_earth_spirit/espirit_spawn.vpcf"
+             "EffectAttachType"  "follow_origin"
+             "Target"            "TARGET"
+             "ControlPointEntities"
+             {
+               "TARGET"  "attach_origin"
+               "TARGET"  "attach_origin"
+             }
+           }           
          }
        }
        "FireSound"
@@ -782,8 +814,8 @@
     {
        "RunScript"
        {
-          "ScriptFile"  "stop.lua"
-          "Function"    "stop"
+          "ScriptFile"  "util.lua"
+          "Function"    "Stop"
        }
        "FireSound"
        {
@@ -976,6 +1008,11 @@
             "var_type" "FIELD_INTEGER"
             "duration" "8 10 12"
         }
+        "03"
+        {
+          "var_type" "FIELD_INTEGER"
+           "radius" "140"
+        }
     }
 
     "precache"
@@ -1036,7 +1073,7 @@
                   "Target"
                   {
                      "Center"   "TARGET"
-                     "Radius"   "150"
+                     "Radius"   "%radius"
                      "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
                      "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
                   }
@@ -1096,6 +1133,26 @@
          "Function" "far_sight"
          "Target" "POINT"
       }
+      "SpawnUnit"
+      {
+        "UnitName"    "invisible_man"
+        "Target"     "POINT"
+        "Duration"    "%duration"
+        "UnitCount"    "1"
+        "UnitLimit"    "0"
+        "GrantsGold"  "0"
+        "GrantsXP"    "0"
+        "SpawnRadius"  "10"
+        "OnSpawn"
+        {
+          "RunScript"
+           {
+             "ScriptFile"  "far_sight.lua"
+             "Function"    "set_vision"
+             "radius"      "%radius"
+           } 
+        }
+      }
       "CreateThinker"
       {
          "ModifierName" "modifier_t_far_sight"
@@ -1120,6 +1177,11 @@
             "Aura_Teams"  "DOTA_UNIT_TARGET_TEAM_ENEMY"
             "Aura_Types"  "DOTA_UNIT_TARGET_ALL"
 
+            "States"
+            {
+              "MODIFIER_STATE_FLYING"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
             "OnCreated"
             {
               "FireSound"
@@ -1128,6 +1190,7 @@
                  "Target"       "TARGET"
               }              
             }
+
 
          }
 
@@ -1154,7 +1217,7 @@
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.1"
-    "AbilityCastRange"				"900"
+    "AbilityCastRange"				"1100"
     "AbilityCastPoint"				"0.1"
     "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
     "AbilityCooldown"  "70"
@@ -1173,7 +1236,7 @@
         "02"
         {
             "var_type" "FIELD_INTEGER"
-            "duration" "5"
+            "duration" "7"
         }
     }
 
@@ -1245,6 +1308,22 @@
                  "EffectName"   "hero_Crystal.freezingField.wind"
                  "Target"       "TARGET"
               }              
+            }
+            "ThinkInterval" "1"
+            "OnIntervalThink"
+            {
+              "AttachEffect"
+              {
+                "EffectName"  "particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+                "EffectAttachType" "world_origin"
+                "Target"   "TARGET"
+
+                "ControlPoints" 
+                {
+                  "01"  "%radius 0 0"
+                  "03"  "0 0 0"
+                }
+              }
             }
          }
 
@@ -1397,7 +1476,7 @@
     "AbilityCastPoint" "0.1"
     "AbilityCooldown"  "20"
     "AbilityManaCost"  "10"
-    "AbilityChannelTime" "1.5"
+    "AbilityChannelTime" "1.75"
     "AbilityCastAnimation" "ACT_DOTA_CAST_ABILITY_1"
     "AnimationPlaybackRate" "0.5"
 
@@ -1560,7 +1639,7 @@
           "IsHidden"     "1"
           "IsPurgable" "0"
 
-          States
+          "States"
           {
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
@@ -1642,7 +1721,7 @@
           "IsHidden"     "1"
           "IsPurgable" "0"
 
-          States
+          "States"
           {
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
@@ -1723,7 +1802,7 @@
           "IsHidden"     "1"
           "IsPurgable" "0"
 
-          States
+          "States"
           {             
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
@@ -1760,7 +1839,7 @@
     }
    } // -- end of CP_Golem
 
-   "CP_Assassin"
+   "CP_Ghost"
    {
 // General
     //-------------------------------------------------------------------------------------
@@ -1802,7 +1881,7 @@
           "IsHidden"     "1"
           "IsPurgable" "0"
 
-          States
+          "States"
           {
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
@@ -1873,12 +1952,12 @@
           "IsHidden"   "1"
           "IsPurgable" "0"
 
-          States
+          "States"
           {
+             "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_ATTACK_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
-             "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
              "MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES" "MODIFIER_STATE_VALUE_ENABLED"

@@ -13,6 +13,7 @@ function Precache( context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
    PrecacheUnitByNameSync("Troll_Headhunter", context)
+   PrecacheUnitByNameSync("rock", context)
    PrecacheUnitByNameSync("Gnoll_Headhunter", context)
    PrecacheUnitByNameSync("Forest_Footman", context)
    PrecacheUnitByNameSync("Blight_Footman", context)
@@ -25,7 +26,7 @@ function Precache( context )
    PrecacheUnitByNameSync("Control_Point_Footman", context)
    PrecacheUnitByNameSync("Control_Point_Headhunter", context)
    PrecacheUnitByNameSync("Control_Point_Golem", context)
-   PrecacheUnitByNameSync("Control_Point_Assassin", context)
+   PrecacheUnitByNameSync("Control_Point_Ghost", context)
 end
 
 -- Create the game mode when we activate
@@ -70,7 +71,7 @@ function spawnSiege(num, player, hero)
    spawnUnits(player, "Siege_Golem", 200, y, num, hero)
 end   
 
-function spawnAssassin(num, player, hero)
+function spawnGhost(num, player, hero)
    local y = 4650
    if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4650 end
    spawnUnits(player, "Ghost_Assassin", 270, y, num, hero)
@@ -101,8 +102,8 @@ function spawnControlPoints()
    spawnPoint("Control_Point_Golem", -2304, -1280, 0)
 
 
-   spawnPoint("Control_Point_Assassin", 0, 3328, 0)
-   spawnPoint("Control_Point_Assassin", 0, -3328, 0)
+   spawnPoint("Control_Point_Ghost", 0, 3328, 0)
+   spawnPoint("Control_Point_Ghost", 0, -3328, 0)
 end
 
 function spawnArmy(player, hero) 
@@ -123,7 +124,7 @@ function spawnArmy(player, hero)
    spawnHeadhunters(6, player, hero)
    spawnFootmen(6, player, hero)
    spawnSiege(2, player, hero)
-   spawnAssassin(1, player, hero)
+   spawnGhost(1, player, hero)
 
 
    -- dont run again

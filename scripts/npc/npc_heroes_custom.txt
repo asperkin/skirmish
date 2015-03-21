@@ -60,7 +60,7 @@
       "StatsManaRegen" "0.02"
       // Vision
       //----------------------------------------------------------------
-      "VisionDaytimeRange" "1800"
+      "VisionDaytimeRange" "1500"
       "VisionNighttimeRange" "1200"
       // Team
       //----------------------------------------------------------------
@@ -101,7 +101,7 @@
       "AttackAnimationPoint" "0.55"
       "AttackAcquisitionRange" "600"
       "AttackRange" "600"
-      //"ProjectileModel" "" //Add projectile
+      "ProjectileModel" "particles/units/heroes/hero_bane/bane_projectile.vpcf" //Add projectile
       "ProjectileSpeed" "900"
       // Attributes
       //----------------------------------------------------------------
@@ -129,7 +129,7 @@
       "StatsManaRegen" "0.02"
       // Vision
       //----------------------------------------------------------------
-      "VisionDaytimeRange" "1800"
+      "VisionDaytimeRange" "1500"
       "VisionNighttimeRange" "1200"
       // Team
       //----------------------------------------------------------------
