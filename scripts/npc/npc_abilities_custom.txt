@@ -255,9 +255,9 @@
     // Stats
     //-------------------------------------------------------------------------------------
     "AbilityCastPoint" "0.5"
-    "AbilityCooldown"  "5"
+    "AbilityCooldown"  "6"
     "AbilityManaCost"  "0"
-    "AbilityChannelTime" "5"
+    "AbilityChannelTime" "6"
     "AbilityCastAnimation" "ACT_DOTA_SHARPEN_WEAPON"
 
     // Special
@@ -272,8 +272,14 @@
         "02"
         {
           "var_type" "FIELD_INTEGER"
+          "damage_heroes" "50"
+        }
+        "03"
+        {
+          "var_type" "FIELD_INTEGER"
           "pct_damage_reduced" "20"
         }
+
     }
 
     "precache"
@@ -311,8 +317,8 @@
     {
        "RunScript"
        {
-          "ScriptFile"  "stop.lua"
-          "Function"    "stop"
+          "ScriptFile"  "util.lua"
+          "Function"    "Stop"
        }
 
        "ApplyModifier"
@@ -356,11 +362,17 @@
             "Properties"
             {
               "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%pct_damage_reduced"
-              "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
             }
 
             "OnAttackLanded"
             {
+               "RunScript"
+               {
+                 "ScriptFile"  "preparation.lua"
+                 "Function"    "DealDamage"
+                 "dmg_units"   "%damage_bonus"
+                 "dmg_heroes"  "%damage_heroes"
+               }
                "FireSound"
                {
                   "EffectName"   "Hero_Axe.CounterHelix"

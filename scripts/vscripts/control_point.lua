@@ -74,6 +74,11 @@ function capture_check(event)
    --capturing code
    units_on_point = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, event.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
 
+   if caster.contested == 1 
+   then
+      caster.contestedClock = caster.contestedClock + event.time_interval 
+   end
+
    if next(units_on_point) ~= nil
    then
       --remove units that arent allowed to cap
@@ -89,7 +94,6 @@ function capture_check(event)
             print("new contention")
          elseif caster.contested == 1 
          then
-            caster.contestedClock = caster.contestedClock + event.time_interval 
             if math.abs(caster.contestedClock % 1) < 0.001
             then
                -- the point is being taken over! and its time to decrement "progress bar"
