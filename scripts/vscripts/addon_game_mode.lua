@@ -142,12 +142,17 @@ function CAddonTemplateGameMode:onHeroPick(event)
    spawnArmy(hero:GetPlayerID(), hero)
 end
 
+function onGameStart(event)
+   print("onGameStart()")
+
+   spawnControlPoints()
+end
+
 
 function CAddonTemplateGameMode:InitGameMode()
 	print( "Template addon is loaded." )
    ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(CAddonTemplateGameMode, 'onHeroPick'), self)
 
-   spawnControlPoints()
    GameRules:SetSameHeroSelectionEnabled(true)
 
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
@@ -156,7 +161,9 @@ end
 -- Evaluate the state of the game
 function CAddonTemplateGameMode:OnThink()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		--print( "Template addon script is running." )
+		print( "Template addon script is running." )
+      onGameStart()
+      return nil
 	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
 		return nil
 	end
