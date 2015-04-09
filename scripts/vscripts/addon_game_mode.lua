@@ -27,7 +27,7 @@ function Precache( context )
 
    PrecacheUnitByNameSync("Control_Point_Footman", context)
    PrecacheUnitByNameSync("Control_Point_Headhunter", context)
-   PrecacheUnitByNameSync("Control_Point_Golem", context)
+   PrecacheUnitByNameSync("Control_Point_Siege", context)
    PrecacheUnitByNameSync("Control_Point_Ghost", context)
 end
 
@@ -98,10 +98,10 @@ function spawnControlPoints()
    spawnPoint("Control_Point_Headhunter", 5631, -4864, 0)
    spawnPoint("Control_Point_Headhunter", -5631, -4864, 0)
 
-   spawnPoint("Control_Point_Golem", 2304, 1280, 0)
-   spawnPoint("Control_Point_Golem", -2304, 1280, 0)
-   spawnPoint("Control_Point_Golem", 2304, -1280, 0)
-   spawnPoint("Control_Point_Golem", -2304, -1280, 0)
+   spawnPoint("Control_Point_Siege", 2304, 1280, 0)
+   spawnPoint("Control_Point_Siege", -2304, 1280, 0)
+   spawnPoint("Control_Point_Siege", 2304, -1280, 0)
+   spawnPoint("Control_Point_Siege", -2304, -1280, 0)
 
 
    spawnPoint("Control_Point_Ghost", 0, 3328, 0)

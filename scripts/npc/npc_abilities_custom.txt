@@ -376,7 +376,7 @@
           }
         }
 
-
+        // CURRENT IMPLEMENTATION MEANS MULTIPLE BURNS (besides first wave) DO NOT STACK
         "mod_burn_thinker"
         {
           "IsHidden" "1"
