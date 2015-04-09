@@ -177,6 +177,7 @@
     }
    }
 
+   //need to change range effect when you change range
    "Burner_War_Stance"
    {
 // General
@@ -247,8 +248,9 @@
     {
         "particle" "particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
         "particle" "particles/status_fx/status_effect_doom.vpcf"        
-        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf" 
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"         
         "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"       
+        "particle"  "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail_circle.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
@@ -328,6 +330,7 @@
                   "EffectName"      "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
                   "EffectAttachType"   "world_origin"
                   "TargetPoint"          "TARGET"
+                  "EffectRadius"    "%radius"
 
                }
                "FireSound"

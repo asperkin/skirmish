@@ -523,9 +523,9 @@
 		//----------------------------------------------------------------
 		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_red.vmdl"	// Model.
 		"BaseClass"					"npc_dota_creature"
-		"SoundSet"					"Hero_morphling"
-      "IdleSoundLoop"         "Hero_morphling.IdleLoop"
-		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts"
+		"SoundSet"					"Hero_DeathProphet"
+      "IdleSoundLoop"         "Hero_DeathProphet.IdleLoop"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		"Level"						"1"
 		"ModelScale" 				"1.2"
 
