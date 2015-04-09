@@ -19,6 +19,8 @@ function Precache( context )
    PrecacheUnitByNameSync("Blight_Footman", context)
    PrecacheUnitByNameSync("Siege_Golem", context)
    PrecacheUnitByNameSync("Ghost_Assassin", context)
+   PrecacheUnitByNameSync("Haunter", context)
+   PrecacheUnitByNameSync("Siege_Burner", context)
    PrecacheUnitByNameSync("npc_hero_archmage", context)
    PrecacheUnitByNameSync("npc_hero_death_knight", context)
    PrecacheUnitByNameSync("sentry_ward", context)
@@ -68,13 +70,13 @@ end
 function spawnSiege(num, player, hero)
    local y = 4450
    if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4450 end
-   spawnUnits(player, "Siege_Golem", 200, y, num, hero)
+   spawnUnits(player, hero.siege_name, 200, y, num, hero)
 end   
 
 function spawnGhost(num, player, hero)
    local y = 4650
    if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4650 end
-   spawnUnits(player, "Ghost_Assassin", 270, y, num, hero)
+   spawnUnits(player, hero.ghost_name, 270, y, num, hero)
 end
 
 function spawnPoint(name, x, y, z)
@@ -114,12 +116,15 @@ function spawnArmy(player, hero)
    then
       hero.footman_name = "Forest_Footman"
       hero.headhunter_name = "Troll_Headhunter"
+      hero.siege_name = "Siege_Golem"
+      hero.ghost_name = "Ghost_Assassin"
    elseif hero:GetUnitName() == "npc_dota_hero_abaddon"
    then
       hero.footman_name = "Blight_Footman"
       hero.headhunter_name = "Gnoll_Headhunter"
+      hero.siege_name = "Siege_Burner"
+      hero.ghost_name = "Haunter"
    end
-   print("heroname = " .. hero:GetUnitName())
 
    spawnHeadhunters(6, player, hero)
    spawnFootmen(6, player, hero)

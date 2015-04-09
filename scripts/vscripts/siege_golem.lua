@@ -8,13 +8,13 @@ function restore_movement(event)
 end
 
 function already_on_check(event)
-   if event.caster:HasModifier("mod_war_stance") 
+   if event.caster:HasModifier("mod_war_stance") or event.caster:HasModifier("mod_burner_war_stance")
       then
          event.caster:Interrupt()
       end
 end
 function is_off_check(event)
-   if not event.caster:HasModifier("mod_war_stance") 
+   if not event.caster:HasModifier("mod_war_stance") and not event.caster:HasModifier("mod_burner_war_stance")
       then
          event.caster:Interrupt()
       end

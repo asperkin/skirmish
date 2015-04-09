@@ -63,6 +63,7 @@
     {
         "particle" "particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
         "particle" "particles/status_fx/status_effect_doom.vpcf"
+        "particle" "particles/units/heroes/hero_dazzle/dazzle_weave_circle_trace.vpcf"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
         "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
     }
@@ -175,6 +176,280 @@
         }
     }
    }
+
+   "Burner_War_Stance"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+    "AbilityTextureName"   "warlock_rain_of_chaos"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastRange"        "1300"
+    "AbilityCastPoint"        "0.3"
+    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_1"
+    "AbilityCastPoint" "0.5"
+    "AbilityCooldown"  "5"
+    "AbilityManaCost"  "0"
+    "AbilityChannelTime" "4"
+    "AbilityCastAnimation" "ACT_DOTA_ATTACK"
+    "AnimationPlaybackRate" "0.1"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "damage_bonus" "44"
+        }
+        "02"
+        {
+            "var_type" "FIELD_INTEGER"
+            "range" "700"
+        }
+        "03"
+        {
+           "var_type" "FIELD_INTEGER"
+           "vision_bonus" "100"
+        }
+        "04"
+        {
+           "var_type" "FIELD_INTEGER"
+           "atk_speed" "-50"
+        }
+        "05"
+        {
+           "var_type" "FIELD_INTEGER"
+           "burn_dps" "50"
+        }
+        "06"
+        {
+           "var_type" "FIELD_INTEGER"
+           "radius" "200"
+        }
+        "07"
+        {
+           "var_type" "FIELD_INTEGER"
+           "delay" "1"
+        }
+        "08"
+        {
+           "var_type" "FIELD_INTEGER"
+           "burn_duration" "2"          
+        }        
+    }
+
+    "precache"
+    {
+        "particle" "particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+        "particle" "particles/status_fx/status_effect_doom.vpcf"        
+        "particle"  "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf" 
+        "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"       
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+       "RunScript"
+       {
+          "ScriptFile" "siege_golem.lua"
+          "Function"   "already_on_check"
+       }
+       "ApplyModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "mod_cmd_restricted"
+       }
+    }
+
+    "OnChannelFinish"
+    {
+       "RemoveModifier"
+       {
+          "Target" "CASTER"
+          "ModifierName" "mod_cmd_restricted"
+       }
+    }
+
+    "OnChannelSucceeded"
+    {
+        "RunScript"
+        {
+           "ScriptFile" "siege_golem.lua"
+           "Function"   "remove_movement"
+        }
+        "ApplyModifier"
+        {
+            "Target"       "CASTER"
+            "ModifierName" "mod_burner_war_stance"
+        }
+        "FireSound"
+        {
+            "EffectName" "Hero_Nevermore.Shadowraze"
+            "Target"     "CASTER"
+        }
+    }
+
+    "Modifiers"
+    {
+       "mod_cmd_restricted"
+       {
+          "Passive"    "0"
+          "IsBuff"     "0"
+          "IsPurgable" "0"
+          "IsHidden"   "1"
+          "States"
+          {
+             "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+          }
+       }
+        "mod_burner_war_stance"
+        {
+            "StatusEffectName"   "particles/status_fx/status_effect_doom.vpcf"
+            "StatusEffectPriority"  "10"
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+            "OnAttackLanded"
+            {
+               "FireEffect"
+               {
+
+                  "EffectName"      "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_requiemofsouls_line_ground.vpcf"
+                  "EffectAttachType"   "world_origin"
+                  "TargetPoint"          "TARGET"
+
+               }
+               "FireSound"
+               {
+                  "EffectName"      "Hero_Invoker.SunStrike.Charge"
+                  "Target"          "TARGET"
+               }
+               "CreateThinker"
+               {
+                 "ModifierName"  "mod_burn_thinker_maker"
+                 "Target"     "TARGET"
+               }
+            }
+
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
+               "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%atk_speed"
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%range"
+               "MODIFIER_PROPERTY_BONUS_DAY_VISION" "%vision_bonus"
+               "MODIFIER_PROPERTY_BONUS_NIGHT_VISION" "%vision_bonus"
+            }
+        }
+
+        "mod_burn_thinker_maker"
+        {
+          "IsHidden" "1"
+          "Duration" "%delay + 0.1"
+          "OnCreated"
+          {
+               "DelayedAction"
+               {
+                 "Delay"     "%delay"
+                 "Action"    
+                 {
+                   "CreateThinker"
+                   {
+                     "ModifierName"  "mod_burn_thinker"
+                     "Target"     "TARGET"
+                   }
+                 }
+               }
+          }
+        }
+
+
+        "mod_burn_thinker"
+        {
+          "IsHidden" "1"
+          "Aura"     "mod_burn"
+          "Aura_Radius" "%radius"
+          "Duration"    "%burn_duration + 0.1"
+          "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+          "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+          "OnCreated"
+          {
+            "Damage"
+            {              
+              "Type"      "DAMAGE_TYPE_PHYSICAL"
+              "Damage"    "%burn_dps"
+              "Target"
+              {
+                "Center"    "TARGET"
+                "Radius"   "%radius"
+                "Teams"   "DOTA_UNIT_TARGET_TEAM_BOTH"
+                "Types"   "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+              }
+            }
+
+            "FireSound"
+            {
+              "EffectName"  "Hero_Invoker.SunStrike.Ignite"
+              "Target"     "TARGET"
+            }
+
+            "AttachEffect"
+            {
+              "EffectName"        "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+              "EffectAttachType"  "world_origin"
+              "Target"            "TARGET"
+              "EffectRadius"      "%radius"
+            }
+          }
+          "ThinkInterval" "1"
+          "OnIntervalThink"
+          {
+            "AttachEffect"
+            {
+              "EffectName"        "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+              "EffectAttachType"  "world_origin"
+              "Target"            "TARGET"
+              "EffectRadius"      "%radius"
+            }
+          }
+
+        }
+        "mod_burn"
+        {
+          "IsDebuff" "1"
+          "ThinkInterval"  "1"
+          "OnIntervalThink"
+          {
+            "Damage"
+            {
+              "Type" "DAMAGE_TYPE_PHYSICAL"
+              "Damage" "%burn_dps"
+              "Target" "TARGET"
+            }
+            "FireSound"
+            {
+              "EffectName"  "Hero_Clinkz.SearingArrows"
+              "Target"     "TARGET"
+            }
+          }
+        }
+    }
+   } // end of burner_war_stance
+
+
+
+   // removes both normal and burner war stance
    "Disengage_War_Stance"
    {
 // General
@@ -224,6 +499,11 @@
        {
           "Target"   "CASTER"
           "ModifierName"   "mod_war_stance"
+       }
+       "RemoveModifier"
+       {
+          "Target"   "CASTER"
+          "ModifierName"   "mod_burner_war_stance"
        }
     }
     "Modifiers"
@@ -886,6 +1166,229 @@
         }
     }
    }
+
+   "Haunt"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityTextureName"   "skeleton_king_hellfire_blast"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0.3"
+    "AbilityCooldown"  "0"
+    "AbilityManaCost"  "0"
+    "AbilityCastRange"        "800"
+    "AbilityChannelTime" "15"
+    "AbilityCastAnimation" "ACT_DOTA_FLAIL"
+    "AnimationPlaybackRate" "0.2"
+    "AoERadius" "%radius"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "radius" "1100"
+        }
+        "02"    
+        {
+            "var_type" "FIELD_INTEGER"
+            "cast_time" "15"
+        }
+    }
+
+    "precache"
+    {
+        "soundfile"   "soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
+        "particle" "particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnChannelSucceeded"
+    {
+       "FireSound"
+       {
+          "Target"   "CASTER"
+          "EffectName"  "Hero_TemplarAssassin.Meld"
+       }
+       "RunScript"
+       {
+         "ScriptFile"  "haunter.lua"
+         "Function"    "onHauntCast"
+         "Target"      "POINT"
+       }
+       "ApplyModifier"
+       {
+         "ModifierName"  "modifier_haunt"
+         "Target"     "CASTER"
+       }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_haunt"
+         {
+            "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "1"
+
+            "ThinkInterval"  "0.2"
+            "OnIntervalThink"
+            {
+              "RunScript"
+              {
+                "ScriptFile"  "haunter.lua"
+                "Function"    "hauntAreaThink"
+                "radius"      "%radius"
+              }
+            }
+        }
+        "modifier_haunt_invis"
+        {
+           "Passive"    "0"
+            "IsBuff"     "1"
+            "IsPurgable" "0"
+            "IsHidden"   "0"
+
+           "StatusEffectName" "particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
+           "StatusEffectPriority" "10"
+           "States"
+            {
+              "MODIFIER_STATE_INVISIBLE"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+        }
+    }    
+   }
+
+
+   "Disappear"
+   {
+// General
+    //-------------------------------------------------------------------------------------
+    "BaseClass"        "ability_datadriven" 
+    "AbilityBehavior"  "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityTextureName"   "vengefulspirit_wave_of_terror"
+
+    // Stats
+    //-------------------------------------------------------------------------------------
+    "AbilityCastPoint" "0"
+    "AbilityCooldown"  "30"
+    "AbilityManaCost"  "0"
+    "AbilityCastRange" "700"
+
+    // Special
+    //-------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type" "FIELD_INTEGER"
+            "range" "700"
+        }
+        "02"
+        {
+          "var_type" "FIELD_INTEGER"
+          "delay" "1.5"
+        }
+    }
+
+    "precache"
+    {
+      "soundfile"   "soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+      "particle"    "particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+      "particle"    "particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+    }
+
+    // Data Driven
+    //-------------------------------------------------------------------------------------
+    "OnSpellStart"
+    {
+      "FireSound"
+       {
+          "Target"   "CASTER"
+          "EffectName"  "Hero_Antimage.Blink_out"
+       }
+
+       "AttachEffect"
+       {
+        "EffectName"    "particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+        "Target"      "CASTER"
+        "EffectAttachType"  "attach_hitloc"
+       }        
+      "ApplyModifier"
+      {
+        "ModifierName"  "modifier_disappear"
+        "Target"     "CASTER"
+        "Duration"    "%delay"
+      }
+       "RunScript"
+       {
+         "ScriptFile"  "haunter.lua"
+         "Function"    "disappear"
+         "Target"      "POINT"
+         "range"       "%range"              
+       }
+             
+       "DelayedAction"
+       {
+         "Delay"     "%delay"
+         "Action"    
+         {
+            "RunScript"
+             {
+               "ScriptFile"  "haunter.lua"
+               "Function"    "reappear"
+          
+             } 
+             "DelayedAction"
+              {
+                "Delay"     "0.05"
+                "Action"    
+                {
+                  "FireSound"
+                  {
+                    "EffectName"  "Hero_Antimage.Blink_in"
+                    "Target"     "CASTER"
+                  }
+                  "AttachEffect"
+                   {
+                     "EffectName"        "particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+                     "EffectAttachType"  "follow_origin"
+                     "Target"            "CASTER"
+                   }    
+                }
+              }              
+         }      
+       }
+    }
+
+     "Modifiers"
+     {
+       "modifier_disappear"
+       {
+         "Passive"      "0"
+         "IsHidden"      "1"
+         "IsDebuff"      "0"
+     
+         
+         "States"
+         {
+           "MODIFIER_STATE_STUNNED"    "MODIFIER_STATE_VALUE_ENABLED"
+           "MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+         }
+       }
+     }
+   }
+
 
 
    "t_regrowth"
@@ -1771,7 +2274,7 @@
    } // -- end of CP_Headhunter
 
 
-   "CP_Golem"
+   "CP_Siege"
    {
 // General
     //-------------------------------------------------------------------------------------
@@ -1807,7 +2310,7 @@
 
     "Modifiers" 
     {
-       "mod_cp_golem"
+       "mod_cp_siege"
        {
           "Passive"    "1"
           "IsHidden"     "1"
@@ -1842,13 +2345,13 @@
                 "Function"      "capture_check"
                 "time_interval" "0.2"
                 "cap_time"      "5"
-                "unit_name"     "golem"
+                "unit_name"     "siege"
                 "radius"        "%radius"
              }
           }
        }
     }
-   } // -- end of CP_Golem
+   } // -- end of CP_Siege
 
    "CP_Ghost"
    {
