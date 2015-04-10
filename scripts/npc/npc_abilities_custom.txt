@@ -225,7 +225,7 @@
         "05"
         {
            "var_type" "FIELD_INTEGER"
-           "burn_dps" "50"
+           "burn_dps" "40"
         }
         "06"
         {
@@ -380,8 +380,6 @@
         "mod_burn_thinker"
         {
           "IsHidden" "1"
-          "Aura"     "mod_burn"
-          "Aura_Radius" "%radius"
           "Duration"    "%burn_duration + 0.1"
           "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
           "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -425,29 +423,28 @@
               "Target"            "TARGET"
               "EffectRadius"      "%radius"
             }
-          }
-
-        }
-        "mod_burn"
-        {
-          "IsDebuff" "1"
-          "ThinkInterval"  "1"
-          "OnIntervalThink"
-          {
             "Damage"
             {
+              "Target"
+              {
+                     "Center"   "TARGET"
+                     "Radius"   "%radius"
+                     "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+                     "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+              }
               "Type" "DAMAGE_TYPE_PHYSICAL"
               "Damage" "%burn_dps"
-              "Target" "TARGET"
+              
             }
             "FireSound"
             {
               "EffectName"  "Hero_Clinkz.SearingArrows"
               "Target"     "TARGET"
             }
+          }            
           }
+
         }
-    }
    } // end of burner_war_stance
 
 
@@ -1170,6 +1167,7 @@
     }
    }
 
+   //when changing radius, change helper ringradius?
    "Haunt"
    {
 // General
@@ -1209,6 +1207,8 @@
     {
         "soundfile"   "soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
         "particle" "particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
+        "particle" "particles/units/heroes/hero_dazzle/dazzle_weave_circle_trace.vpcf"
+        "particle" "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail_circle.vpcf"
     }
 
     // Data Driven
@@ -1230,7 +1230,7 @@
        {
          "ModifierName"  "modifier_haunt"
          "Target"     "CASTER"
-       }
+       }       
 
     }
 

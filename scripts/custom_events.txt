@@ -1,0 +1,8 @@
+"CustomEvents"
+{
+   "custom_error"
+   {
+      "playerID"    "short"
+      "_text"       "string"
+   }
+}

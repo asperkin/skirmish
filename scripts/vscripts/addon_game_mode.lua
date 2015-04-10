@@ -20,6 +20,7 @@ function Precache( context )
    PrecacheUnitByNameSync("Siege_Golem", context)
    PrecacheUnitByNameSync("Ghost_Assassin", context)
    PrecacheUnitByNameSync("Haunter", context)
+   PrecacheUnitByNameSync("haunt_helper", context)
    PrecacheUnitByNameSync("Siege_Burner", context)
    PrecacheUnitByNameSync("npc_hero_archmage", context)
    PrecacheUnitByNameSync("npc_hero_death_knight", context)
@@ -29,6 +30,7 @@ function Precache( context )
    PrecacheUnitByNameSync("Control_Point_Headhunter", context)
    PrecacheUnitByNameSync("Control_Point_Siege", context)
    PrecacheUnitByNameSync("Control_Point_Ghost", context)
+   PrecacheUnitByNameSync("invisible_man", context)
 end
 
 -- Create the game mode when we activate

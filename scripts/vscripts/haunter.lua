@@ -1,0 +1,56 @@
+require('util')
+
+function onHauntCast(event)
+   --clear previous helper and vfx
+   if (event.caster.haunt_helper) 
+   then 
+      event.caster.haunt_helper:RemoveSelf()
+      ParticleManager:DestroyParticle(event.caster.haunt_vfx)
+   end
+
+
+   event.caster.haunt_center = event.target_points[1]
+   event.caster.invis = false
+   local hero = getHeroForTeam(event.caster:GetTeam())
+   event.caster.haunt_helper = CreateUnitByName("haunt_helper", event.target_points[1], true, nil, hero, event.caster:GetTeam())
+   event.caster.haunt_vfx = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail_circle.vpcf", PATTACH_ABSORIGIN, event.caster.haunt_helper, PlayerResource:GetPlayer(hero:GetPlayerID()))
+
+   ParticleManager:SetParticleControl(event.caster.haunt_vfx, 0, event.caster.haunt_helper:GetAbsOrigin())
+   ParticleManager:SetParticleControl(event.caster.haunt_vfx, 1, Vector(1100,0,0))
+end
+
+function hauntAreaThink(event)
+   local caster = event.caster
+
+   local distance = (caster:GetAbsOrigin() - caster.haunt_center):Length()
+   if distance < event.radius
+   then
+      event.ability:ApplyDataDrivenModifier(caster,caster,"modifier_haunt_invis", {duration = 0.22})
+      if caster.invis == false 
+      then
+         caster:EmitSound("Hero_TemplarAssassin.Meld")
+      end
+      caster.invis = true
+   else
+      caster.invis = false
+   end
+end
+
+function disappear(event)
+   event.caster.disappear_point = event.target_points[1]
+   local diff = event.caster.disappear_point - event.caster:GetAbsOrigin()
+   if diff:Length2D() > event.range 
+   then
+      event.caster.disappear_point = event.caster:GetAbsOrigin() + (event.caster.disappear_point - event.caster:GetAbsOrigin()):Normalized() * event.range
+   end
+
+   --hide caster for delay
+   --there is no model scale getter currently. hardcoded to reset to 1.2
+   event.caster:SetModelScale(0)
+end
+
+--guaranteed that disapear was called first
+function reappear(event)
+   FindClearSpaceForUnit(event.caster, event.caster.disappear_point, false)
+   event.caster:SetModelScale(1.2)
+end
