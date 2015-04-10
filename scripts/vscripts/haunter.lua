@@ -2,21 +2,20 @@ require('util')
 
 function onHauntCast(event)
    --clear previous helper and vfx
-   if (event.caster.haunt_helper) 
+   if (event.caster.haunt_vfx) 
    then 
-      event.caster.haunt_helper:RemoveSelf()
-      ParticleManager:DestroyParticle(event.caster.haunt_vfx)
+      ParticleManager:DestroyParticle(event.caster.haunt_vfx, false)
+      event.caster.haunt_vfx = nil
    end
 
 
    event.caster.haunt_center = event.target_points[1]
    event.caster.invis = false
    local hero = getHeroForTeam(event.caster:GetTeam())
-   event.caster.haunt_helper = CreateUnitByName("haunt_helper", event.target_points[1], true, nil, hero, event.caster:GetTeam())
-   event.caster.haunt_vfx = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail_circle.vpcf", PATTACH_ABSORIGIN, event.caster.haunt_helper, PlayerResource:GetPlayer(hero:GetPlayerID()))
+   event.caster.haunt_vfx = ParticleManager:CreateParticleForPlayer("particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail_circle.vpcf", PATTACH_WORLDORIGIN, event.caster, PlayerResource:GetPlayer(hero:GetPlayerID()))
 
-   ParticleManager:SetParticleControl(event.caster.haunt_vfx, 0, event.caster.haunt_helper:GetAbsOrigin())
-   ParticleManager:SetParticleControl(event.caster.haunt_vfx, 1, Vector(1100,0,0))
+   ParticleManager:SetParticleControl(event.caster.haunt_vfx, 0, event.target_points[1])
+   ParticleManager:SetParticleControl(event.caster.haunt_vfx, 1, Vector(126,0,0))
 end
 
 function hauntAreaThink(event)
