@@ -41,43 +41,94 @@ end
 
 
 -- generic unit spawning. istep needed for different unit widths
-function spawnUnits(player, unit_name, istep, ycoord, num, hero)
+function spawnUnits(player, unit_name, istep, xcoord, ycoord, num, hero)
    local imax = istep * (num - 1)
    local unit_team = hero:GetTeam()
 
    for i = 0, imax, istep do
-      local point = Vector(-(imax/2) + i, ycoord, 0) -- centered
+      local point = Vector(-(imax/2) + i + xcoord, ycoord, 0) -- centered
       
       local unit = CreateUnitByName(unit_name, point, true, nil, hero, unit_team)
       unit:SetControllableByPlayer(player, true)
    end
 end
-function spawnUnitsForBoth(player1, player2, unit_name, istep, ycoord, num)
-   spawnUnits(player1, unit_name, istep, ycoord, num)
-   spawnUnits(player2, unit_name, istep, -ycoord, num)
-end
 
+-- undefined support for any of these for odd unit #s, except ghost
 function spawnFootmen(num, player, hero)
-   local y = 4150
-   if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4150 end
-   spawnUnits(player, hero.footman_name, 80, y, num, hero)
+   --[[local y = 4150
+   if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+   spawnUnits(player, hero.footman_name, 80, 0, y, num, hero)
+   ]]
+
+   local y = 4096
+   if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+   local unit = hero.footman_name
+   spawnUnits(player, unit, 80, 2304, y, 1, hero)
+   spawnUnits(player, unit, 80, -2304, y, 1, hero)
+   if num > 2
+   then
+      local y = 1151
+      if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+      spawnUnits(player, unit, 80, 2304, y, (num - 2) / 2, hero)
+      spawnUnits(player, unit, 80, -2304, y, (num - 2) / 2, hero)
+   end
+
+
 end
 function spawnHeadhunters(num, player, hero)
-   local y = 4250
+   --[[local y = 4250
    if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4250 end
-   spawnUnits(player, hero.headhunter_name, 80, y, num, hero)
+   spawnUnits(player, hero.headhunter_name, 80, 0, y, num, hero)
+   ]]
+   -- spawn one on each hedhunter point
+   --then the rest in front of each hill symmetrically
+   local y = 4864
+   if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+   local unit = hero.headhunter_name
+
+   spawnUnits(player, unit, 80, 5631, y, 1, hero)
+   spawnUnits(player, unit, 80, -5631, y, 1, hero)
+   if num > 2
+   then
+      local y = 1408
+      if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+      spawnUnits(player, unit, 80, 2304, y, (num - 2) / 2, hero)
+      spawnUnits(player, unit, 80, -2304, y, (num - 2) / 2, hero)
+   end
+
 end
 
 function spawnSiege(num, player, hero)
-   local y = 4450
+   --[[local y = 4450
    if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4450 end
-   spawnUnits(player, hero.siege_name, 200, y, num, hero)
+   spawnUnits(player, hero.siege_name, 200, 0, y, num, hero)
+   ]]
+   -- new functionality - spawn siege golems on players' hills
+   local y = 2431
+   if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+   local unit = hero.siege_name
+   spawnUnits(player, unit, 200, 2304, y, 1, hero)
+   spawnUnits(player, unit, 200, -2304, y, 1, hero)
+   if num > 2
+   then
+      local y = 4450
+      if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+      spawnUnits(player, unit, 200, 0, y, num - 2, hero)
+   end
+
 end   
 
 function spawnGhost(num, player, hero)
-   local y = 4650
+   --[[ local y = 4650
    if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -4650 end
-   spawnUnits(player, hero.ghost_name, 270, y, num, hero)
+   spawnUnits(player, hero.ghost_name, 270, 0, y, num, hero)
+   ]]
+
+   local y = 3328
+   if hero:GetTeam() == DOTA_TEAM_BADGUYS then y = -y end
+   -- new functionality - spawn ghost on ctrl point
+   spawnUnits(player, hero.ghost_name, 270, 0, y, num, hero)
+   
 end
 
 function spawnPoint(name, x, y, z)
@@ -154,10 +205,25 @@ function onGameStart(event)
    spawnControlPoints()
 end
 
+function CAddonTemplateGameMode:onEntityKilled(event)
+   local killedUnit = EntIndexToHScript(event.entindex_killed)
+   --print("onEntityKilled " .. killedUnit:GetUnitName())
+   if killedUnit:GetUnitName() == 'Haunter'
+   then
+      --remove art for haunted area
+      if (killedUnit.haunt_vfx) 
+      then 
+         ParticleManager:DestroyParticle(killedUnit.haunt_vfx, false)
+         killedUnit.haunt_vfx = nil
+      end
+   end
+end
+
 
 function CAddonTemplateGameMode:InitGameMode()
 	print( "Template addon is loaded." )
    ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(CAddonTemplateGameMode, 'onHeroPick'), self)
+   ListenToGameEvent('entity_killed', Dynamic_Wrap(CAddonTemplateGameMode, 'onEntityKilled'), self)
 
    GameRules:SetSameHeroSelectionEnabled(true)
 

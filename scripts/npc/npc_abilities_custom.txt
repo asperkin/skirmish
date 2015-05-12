@@ -1201,6 +1201,11 @@
             "var_type" "FIELD_INTEGER"
             "cast_time" "15"
         }
+        "03"
+        {
+          "var_type" "FIELD_INTEGER"
+          "bonus_hp_regen" "4"
+        }
     }
 
     "precache"
@@ -1265,6 +1270,10 @@
            "States"
             {
               "MODIFIER_STATE_INVISIBLE"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+            "Properties"
+            {
+              "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%bonus_hp_regen"
             }
 
         }
